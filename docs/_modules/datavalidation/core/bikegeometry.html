@@ -1,0 +1,555 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>datavalidation.core.bikegeometry &mdash; Data Validation 1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Data Validation
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">Data Validation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../history.html">History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../implementation.html">Implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/modules.html">Documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Data Validation</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>datavalidation.core.bikegeometry</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for datavalidation.core.bikegeometry</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">BikeGeometry</span>
+<span class="sd">----------------------------------</span>
+
+<span class="sd">Main object of the datavalidation package.</span>
+<span class="sd">It holds information about a bike geometry, including its parameters and certain config options.</span>
+<span class="sd">It also provides logic to work with bike geometries and to convert from/to JSON representation.</span>
+
+<span class="sd">Author: Javier Chiyah, Heriot-Watt University, 2019</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">from</span> <span class="nn">.geometryparameter</span> <span class="k">import</span> <span class="n">GeometryParameter</span>
+<span class="kn">from</span> <span class="nn">.constants</span> <span class="k">import</span> <span class="n">GEOMETRY_PARAMETERS</span><span class="p">,</span> <span class="n">VALIDATABLE_PARAMETER_LIST</span><span class="p">,</span> <span class="n">TOTAL_VALIDATABLE_PARAMETERS</span>
+
+
+<div class="viewcode-block" id="BikeGeometry"><a class="viewcode-back" href="../../../source/datavalidation.core.html#datavalidation.core.bikegeometry.BikeGeometry">[docs]</a><span class="k">class</span> <span class="nc">BikeGeometry</span><span class="p">:</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	A BikeGeometry can be initialised with a JSON-like dict with a list of parameters.</span>
+
+<span class="sd">	If the dict given contains more elements than those needed by the BikeGeometry itself, it will save</span>
+<span class="sd">	and output them when the BikeGeometry is converted back to a dict.</span>
+<span class="sd">	For instance, giving a field &quot;id&quot; would return the same field with the values at the end.</span>
+
+<span class="sd">	Example valid dict::</span>
+
+<span class="sd">		{</span>
+<span class="sd">			&quot;parameter_list&quot;: [</span>
+<span class="sd">				{</span>
+<span class="sd">					&quot;p&quot;: &quot;reach&quot;,</span>
+<span class="sd">					&quot;v&quot;: &quot;371&quot;,</span>
+<span class="sd">					&quot;id&quot;: &quot;**any-value**&quot;</span>
+<span class="sd">				},</span>
+<span class="sd">				{</span>
+<span class="sd">					&quot;p&quot;: &quot;stack&quot;,</span>
+<span class="sd">					&quot;v&quot;: &quot;533&quot;,</span>
+<span class="sd">					&quot;id&quot;: &quot;**any-value**&quot;</span>
+<span class="sd">				}</span>
+<span class="sd">			}</span>
+<span class="sd">		}</span>
+
+<span class="sd">	There is a @classmethod available if you need to create a BikeGeometry from a dict of parameters instead.</span>
+
+<span class="sd">	:param json_dict: dict with the bike geometry information</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+
+	<span class="c1"># config values</span>
+	<span class="c1"># thresholds - it will mark geometries or parameters as invalid if confidence is below this threshold</span>
+	<span class="n">_GEOMETRY_THRESHOLD</span> <span class="o">=</span> <span class="mf">0.7</span>
+	<span class="n">_PARAMETER_THRESHOLD</span> <span class="o">=</span> <span class="mf">0.7</span>
+
+	<span class="n">_OPTIMISTIC_VALIDATION</span> <span class="o">=</span> <span class="kc">False</span>
+	<span class="n">_COUNT_CALCULATED_PARAMETERS</span> <span class="o">=</span> <span class="kc">False</span>
+
+	<span class="n">_extra_values</span> <span class="o">=</span> <span class="p">{}</span>
+
+	<span class="n">_validated_params</span> <span class="o">=</span> <span class="mi">0</span>
+	<span class="n">_calculated_params</span> <span class="o">=</span> <span class="mi">0</span>
+
+	<span class="n">_parameters</span> <span class="o">=</span> <span class="p">{</span>
+		<span class="s2">&quot;slug&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+		<span class="s2">&quot;alt_size&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+		<span class="s2">&quot;axle_spacing&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+		<span class="s2">&quot;axle_to_crown&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+		<span class="s2">&quot;bb_drop&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+		<span class="s2">&quot;bb_height&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+		<span class="s2">&quot;bb_type&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+		<span class="s2">&quot;bike_slug&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+		<span class="s2">&quot;chainstay&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+		<span class="s2">&quot;crank_length&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+		<span class="s2">&quot;fork_length&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+		<span class="s2">&quot;fork_rake&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+		<span class="s2">&quot;front_centre&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+		<span class="s2">&quot;front_sus_travel&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+		<span class="s2">&quot;handlebar_drop&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+		<span class="s2">&quot;handlebar_reach&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+		<span class="s2">&quot;handlebar_width&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+		<span class="s2">&quot;head_angle&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+		<span class="s2">&quot;head_tube&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+		<span class="s2">&quot;pad_reach&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+		<span class="s2">&quot;pad_stack&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+		<span class="s2">&quot;reach&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+		<span class="s2">&quot;rear_sus_travel&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+		<span class="s2">&quot;saddle_height&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+		<span class="s2">&quot;seat_angle&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+		<span class="s2">&quot;seat_clamp_size&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+		<span class="s2">&quot;seat_tube_length&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+		<span class="s2">&quot;seat_tube_length_cc&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+		<span class="s2">&quot;seat_tube_length_eff&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+		<span class="s2">&quot;seatpost_diameter&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+		<span class="s2">&quot;seatpost_length&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+		<span class="s2">&quot;seatpost_offset&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+		<span class="s2">&quot;shock_size&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+		<span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+		<span class="s2">&quot;stack&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+		<span class="s2">&quot;standover&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+		<span class="s2">&quot;stem_angle&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+		<span class="s2">&quot;stem_length&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+		<span class="s2">&quot;top_tube&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+		<span class="s2">&quot;top_tube_actual&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+		<span class="s2">&quot;trail&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+		<span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+		<span class="s2">&quot;tyre_width&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+		<span class="s2">&quot;wheel_size&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+		<span class="s2">&quot;wheelbase&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+		<span class="s2">&quot;year&quot;</span><span class="p">:</span> <span class="kc">None</span>
+	<span class="p">}</span>
+
+	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">json_dict</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+		<span class="c1"># this makes sure that the parameters are None to start with, to avoid Python messing with the objects at run-time</span>
+		<span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">_from_json</span><span class="p">(</span><span class="n">json_dict</span><span class="p">)</span>
+
+<div class="viewcode-block" id="BikeGeometry.from_parameter_dict"><a class="viewcode-back" href="../../../source/datavalidation.core.html#datavalidation.core.bikegeometry.BikeGeometry.from_parameter_dict">[docs]</a>	<span class="nd">@classmethod</span>
+	<span class="k">def</span> <span class="nf">from_parameter_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">json_dict</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Creates a new BikeGeometry from a dictionary of parameters. This is used mostly in testing.</span>
+<span class="sd">		Example dict::</span>
+
+<span class="sd">			{</span>
+<span class="sd">				&quot;parameter1&quot;: &quot;value1&quot;,</span>
+<span class="sd">				&quot;parameter2&quot;: &quot;value2&quot;</span>
+<span class="sd">			}</span>
+
+<span class="sd">		:param json_dict: dict of parameters</span>
+<span class="sd">		:return: BikeGeometry</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+		<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">json_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+			<span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+				<span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="n">key</span><span class="p">,</span>
+				<span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="n">val</span>
+			<span class="p">})</span>
+
+		<span class="k">return</span> <span class="bp">cls</span><span class="p">({</span><span class="s2">&quot;parameter_list&quot;</span><span class="p">:</span> <span class="n">result</span><span class="p">})</span></div>
+
+<div class="viewcode-block" id="BikeGeometry.get_parameter"><a class="viewcode-back" href="../../../source/datavalidation.core.html#datavalidation.core.bikegeometry.BikeGeometry.get_parameter">[docs]</a>	<span class="k">def</span> <span class="nf">get_parameter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameter_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Gets a GeometryParameter of this BikeGeometry.</span>
+<span class="sd">		It returns None if the parameter has not been initialised or does not exists.</span>
+
+<span class="sd">		Example usage::</span>
+
+<span class="sd">			&gt;&gt; bike.get_parameter(&quot;slug&quot;)</span>
+<span class="sd">			GeometryParameter()</span>
+
+<span class="sd">		:param parameter_name: name of the parameter</span>
+<span class="sd">		:return: GeometryParameter or None</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span><span class="p">[</span><span class="n">parameter_name</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="BikeGeometry.get_parameter_value"><a class="viewcode-back" href="../../../source/datavalidation.core.html#datavalidation.core.bikegeometry.BikeGeometry.get_parameter_value">[docs]</a>	<span class="k">def</span> <span class="nf">get_parameter_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameter_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Gets the value of a GeometryParameter of this BikeGeometry.</span>
+<span class="sd">		It returns None if the parameter is missing, does not exists or if its value is None.</span>
+
+<span class="sd">		Example usage::</span>
+
+<span class="sd">			&gt;&gt; bike.get_parameter_value(&quot;slug&quot;)</span>
+<span class="sd">			&quot;bike_slug_name&quot;</span>
+<span class="sd">			# this is also equivalent</span>
+<span class="sd">			&gt;&gt; bike.get_parameter(&quot;slug&quot;).value</span>
+<span class="sd">			&quot;bike_slug_name&quot;</span>
+
+<span class="sd">		:param parameter_name: name of the parameter</span>
+<span class="sd">		:return: the value of the parameter, which can be str, int, float (or None if it does not exists)</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span><span class="p">[</span><span class="n">parameter_name</span><span class="p">])</span><span class="o">.</span><span class="n">value</span>
+
+		<span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+			<span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Trying to retrieve missing GeometryParameter(&#39;</span><span class="si">{}</span><span class="s2">&#39;), defaulting to None&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">parameter_name</span><span class="p">))</span>
+			<span class="k">return</span> <span class="kc">None</span>
+
+		<span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+			<span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;GeometryParameter(&#39;</span><span class="si">{}</span><span class="s2">&#39;) empty, defaulting to None&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">parameter_name</span><span class="p">))</span>
+			<span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="BikeGeometry.get_parameter_list"><a class="viewcode-back" href="../../../source/datavalidation.core.html#datavalidation.core.bikegeometry.BikeGeometry.get_parameter_list">[docs]</a>	<span class="k">def</span> <span class="nf">get_parameter_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_empty</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Gets a list with all the parameters from the BikeGeometry. It filters empty/invalid parameters by default.</span>
+
+<span class="sd">		:param filter_empty: whether to filter empty parameters (those that are None or their value is empty), True by default</span>
+<span class="sd">		:return: list of GeometryParameter</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">if</span> <span class="ow">not</span> <span class="n">filter_empty</span><span class="p">:</span>
+			<span class="k">return</span> <span class="p">[</span><span class="n">val</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span><span class="o">.</span><span class="n">items</span><span class="p">()]</span>
+
+		<span class="k">return</span> <span class="p">[</span><span class="n">val</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_parameter_empty</span><span class="p">(</span><span class="n">key</span><span class="p">)]</span></div>
+
+<div class="viewcode-block" id="BikeGeometry.get_missing_parameter_list"><a class="viewcode-back" href="../../../source/datavalidation.core.html#datavalidation.core.bikegeometry.BikeGeometry.get_missing_parameter_list">[docs]</a>	<span class="k">def</span> <span class="nf">get_missing_parameter_list</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Gets a list of all the parameters that are missing (e.g. None value, &quot;&quot; value, etc).</span>
+<span class="sd">		It only returns those parameters that can be calculated based on constants.VALIDATABLE_PARAMETERS_LIST</span>
+
+<span class="sd">		:return: list of parameter names (list of str)</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">return</span> <span class="p">[</span><span class="n">key</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_parameter_empty</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="ow">and</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">VALIDATABLE_PARAMETER_LIST</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="BikeGeometry.get_confidence_score"><a class="viewcode-back" href="../../../source/datavalidation.core.html#datavalidation.core.bikegeometry.BikeGeometry.get_confidence_score">[docs]</a>	<span class="k">def</span> <span class="nf">get_confidence_score</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Gets the confidence score of this BikeGeometry. It is None if no validation has been performed on this</span>
+<span class="sd">		BikeGeometry.</span>
+
+<span class="sd">		The confidence score is how confident we are that the parameters of this BikeGeometry fit together. The score is</span>
+<span class="sd">		calculated only when this function is called, without updating parameters confidences when these change.</span>
+<span class="sd">		Therefore, it is safe for parallel execution, but it is best not to call this function too often as it may</span>
+<span class="sd">		take some time to calculate.</span>
+
+<span class="sd">		:return: float from 0 to 1, or None if no validation has been performed</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">validated_param_list</span> <span class="o">=</span> <span class="p">[(</span><span class="n">param</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">param</span><span class="o">.</span><span class="n">confidence</span><span class="p">)</span> <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_parameter_list</span><span class="p">()</span>
+			<span class="k">if</span> <span class="n">param</span><span class="o">.</span><span class="n">confidence</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">param</span><span class="o">.</span><span class="n">is_number</span><span class="p">()</span> <span class="ow">and</span> <span class="n">param</span><span class="o">.</span><span class="n">normalised_value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">]</span>
+
+		<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">validated_param_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+			<span class="n">confidence</span> <span class="o">=</span> <span class="mi">0</span>
+
+			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_OPTIMISTIC_VALIDATION</span><span class="p">:</span>
+				<span class="c1"># optimistic validation</span>
+				<span class="n">confidence</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">l</span><span class="p">:</span> <span class="n">l</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">validated_param_list</span><span class="p">))</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">validated_param_list</span><span class="p">)</span>
+
+			<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_COUNT_CALCULATED_PARAMETERS</span><span class="p">:</span>
+				<span class="c1"># pessimist validation that takes all the possible validatable parameters into account</span>
+				<span class="n">total_validated_calculated_params</span> <span class="o">=</span> <span class="nb">len</span><span class="p">([(</span><span class="n">param</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">param</span><span class="o">.</span><span class="n">confidence</span><span class="p">)</span> <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_parameter_list</span><span class="p">()</span>
+					<span class="k">if</span> <span class="n">param</span><span class="o">.</span><span class="n">confidence</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">param</span><span class="o">.</span><span class="n">is_number</span><span class="p">()])</span>
+				<span class="n">confidence</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">l</span><span class="p">:</span> <span class="n">l</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">validated_param_list</span><span class="p">))</span> <span class="o">/</span> <span class="n">total_validated_calculated_params</span>
+
+			<span class="k">else</span><span class="p">:</span>
+				<span class="c1"># very pessimistic validation</span>
+				<span class="n">confidence</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">l</span><span class="p">:</span> <span class="n">l</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">validated_param_list</span><span class="p">))</span> <span class="o">/</span> <span class="n">TOTAL_VALIDATABLE_PARAMETERS</span>
+
+			<span class="bp">self</span><span class="o">.</span><span class="n">_validated_params</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">validated_param_list</span><span class="p">)</span>
+			<span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;BikeGeometry confidence score = </span><span class="si">{}</span><span class="s2"> (validated params = </span><span class="si">{}</span><span class="s2">/</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+				<span class="n">confidence</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validated_params</span><span class="p">,</span> <span class="n">TOTAL_VALIDATABLE_PARAMETERS</span><span class="p">))</span>
+
+			<span class="n">validated_names_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">validated_param_list</span><span class="p">]</span>
+			<span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;GeometryParameters validated: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">validated_names_list</span><span class="p">))</span>
+
+			<span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;GeometryParameters not validated: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+				<span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">VALIDATABLE_PARAMETER_LIST</span> <span class="k">if</span> <span class="n">x</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">validated_names_list</span><span class="p">]))</span>
+			<span class="k">return</span> <span class="n">confidence</span>
+
+		<span class="k">else</span><span class="p">:</span>
+			<span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="BikeGeometry.set_parameter"><a class="viewcode-back" href="../../../source/datavalidation.core.html#datavalidation.core.bikegeometry.BikeGeometry.set_parameter">[docs]</a>	<span class="k">def</span> <span class="nf">set_parameter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameter</span><span class="p">:</span> <span class="n">GeometryParameter</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Sets a parameter of the BikeGeometry. This is used to set the parameters of the BikeGeometry when they</span>
+<span class="sd">		were missing from the initialisation dict.</span>
+<span class="sd">		Note that it substitutes the value, overriding whatever was before!</span>
+
+<span class="sd">		:param parameter: GeometryParameter</span>
+<span class="sd">		:return: None</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span><span class="p">[</span><span class="n">parameter</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">parameter</span></div>
+
+<div class="viewcode-block" id="BikeGeometry.to_dict"><a class="viewcode-back" href="../../../source/datavalidation.core.html#datavalidation.core.bikegeometry.BikeGeometry.to_dict">[docs]</a>	<span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">string_values</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Returns the value as a dict type so it can be serialised in a JSON response.</span>
+
+<span class="sd">		:param string_values: whether to return the values in string format or not. Default is True, so everything is</span>
+<span class="sd">			returned as string</span>
+<span class="sd">		:return: dict object similar to that given in the __init__ function</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">parameter_list</span> <span class="o">=</span> <span class="p">[]</span>
+		<span class="k">for</span> <span class="n">param_name</span><span class="p">,</span> <span class="n">param_value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+			<span class="k">if</span> <span class="n">param_value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+				<span class="n">param_dict</span> <span class="o">=</span> <span class="n">param_value</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">string_values</span><span class="p">)</span>
+				<span class="c1"># add invalid True or False depending on threshold</span>
+				<span class="k">if</span> <span class="s2">&quot;confidence&quot;</span> <span class="ow">in</span> <span class="n">param_dict</span><span class="p">:</span>
+					<span class="n">param_dict</span><span class="p">[</span><span class="s1">&#39;invalid&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">param_dict</span><span class="p">[</span><span class="s1">&#39;confidence&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_PARAMETER_THRESHOLD</span>
+
+				<span class="n">parameter_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">param_dict</span><span class="p">)</span>
+
+		<span class="n">geometry_dict</span> <span class="o">=</span> <span class="p">{</span>
+			<span class="s2">&quot;parameter_list&quot;</span><span class="p">:</span> <span class="n">parameter_list</span><span class="p">,</span>
+			<span class="s2">&quot;geometry_threshold&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_GEOMETRY_THRESHOLD</span><span class="p">,</span>
+			<span class="s2">&quot;parameter_threshold&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_PARAMETER_THRESHOLD</span><span class="p">,</span>
+			<span class="s2">&quot;optimistic_validation&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_OPTIMISTIC_VALIDATION</span><span class="p">,</span>
+			<span class="s2">&quot;count_calculated_params&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_COUNT_CALCULATED_PARAMETERS</span><span class="p">,</span>
+			<span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_extra_values</span>
+		<span class="p">}</span>
+
+		<span class="n">confidence</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_confidence_score</span><span class="p">()</span>
+		<span class="k">if</span> <span class="n">confidence</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+			<span class="n">geometry_dict</span><span class="p">[</span><span class="s1">&#39;confidence&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">confidence</span>
+			<span class="n">geometry_dict</span><span class="p">[</span><span class="s1">&#39;invalid&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">confidence</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_GEOMETRY_THRESHOLD</span>
+			<span class="n">geometry_dict</span><span class="p">[</span><span class="s1">&#39;validated_parameters&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validated_params</span>
+			<span class="n">geometry_dict</span><span class="p">[</span><span class="s1">&#39;validatable_parameters&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">TOTAL_VALIDATABLE_PARAMETERS</span>
+
+		<span class="k">return</span> <span class="n">geometry_dict</span></div>
+
+	<span class="k">def</span> <span class="nf">_from_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">json_dict</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Initialises the several class members of the BikeGeometry from a dict. See __init__ for more information.</span>
+
+<span class="sd">		:param json_dict: dict object</span>
+<span class="sd">		:return: None</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">json_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+			<span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;parameter_list&quot;</span><span class="p">:</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">_set_parameters</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+			<span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;geometry_threshold&quot;</span><span class="p">:</span>
+				<span class="k">try</span><span class="p">:</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">_GEOMETRY_THRESHOLD</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+				<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+					<span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Value in &#39;geometry_threshold&#39; not valid, it must be between 0 and 1. Defaulting to </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_GEOMETRY_THRESHOLD</span><span class="p">))</span>
+
+			<span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;parameter_threshold&quot;</span><span class="p">:</span>
+				<span class="k">try</span><span class="p">:</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">_PARAMETER_THRESHOLD</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+				<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+					<span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Value in &#39;parameter_threshold&#39; not valid, it must be between 0 and 1. Defaulting to </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_PARAMETER_THRESHOLD</span><span class="p">))</span>
+
+			<span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;optimistic_validation&quot;</span><span class="p">:</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">_OPTIMISTIC_VALIDATION</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+			<span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;count_calculated_params&quot;</span><span class="p">:</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">_COUNT_CALCULATED_PARAMETERS</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+			<span class="k">else</span><span class="p">:</span>
+				<span class="c1"># setattr(self, &quot;_&quot; + key, value)</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">_extra_values</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+	<span class="k">def</span> <span class="nf">_set_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameter_list</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Initialises the GeometryParameters of the BikeGeometry from a list of parameters.</span>
+
+<span class="sd">		:param parameter_list: list of parameter objects</span>
+<span class="sd">		:return: None</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">for</span> <span class="n">parameter</span> <span class="ow">in</span> <span class="n">parameter_list</span><span class="p">:</span>
+			<span class="k">try</span><span class="p">:</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span><span class="p">[</span><span class="n">parameter</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">GeometryParameter</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">parameter</span><span class="p">)</span>
+			<span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+				<span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Unknown GeometryParameter(&#39;</span><span class="si">{}</span><span class="s2">&#39;), ignoring it&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">parameter</span><span class="p">)))</span>
+
+	<span class="k">def</span> <span class="nf">_is_parameter_empty</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameter_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Checks if a GeometryParameter is empty. In other words, if the parameter is None or</span>
+<span class="sd">		its value is None or the empty string.</span>
+
+<span class="sd">		:return: bool, True if parameter is empty</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">return</span> <span class="n">parameter_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span> \
+				<span class="ow">and</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span><span class="p">[</span><span class="n">parameter_name</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span>
+				<span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span><span class="p">[</span><span class="n">parameter_name</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span>
+				<span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span><span class="p">[</span><span class="n">parameter_name</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Javier Chiyah Garcia
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

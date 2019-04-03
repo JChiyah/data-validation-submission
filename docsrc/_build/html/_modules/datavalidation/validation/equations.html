@@ -1,0 +1,382 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>datavalidation.validation.equations &mdash; Data Validation 1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Data Validation
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">Data Validation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../history.html">History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../implementation.html">Implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/modules.html">Documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Data Validation</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>datavalidation.validation.equations</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for datavalidation.validation.equations</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">equations</span>
+<span class="sd">----------------------------------</span>
+
+<span class="sd">Module containing functions that get and solve equations for a given GeometryParameter.</span>
+
+<span class="sd">Author: Javier Chiyah, Heriot-Watt University, 2019</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">sympy</span>
+<span class="kn">import</span> <span class="nn">sympy.solvers</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">from</span> <span class="nn">datavalidation.core</span> <span class="k">import</span> <span class="n">BikeGeometry</span>
+<span class="kn">from</span> <span class="nn">.constraints</span> <span class="k">import</span> <span class="n">filter_by_constraints</span>
+<span class="kn">from</span> <span class="nn">.formulae</span> <span class="k">import</span> <span class="n">VALIDATION_FORMULAE</span><span class="p">,</span> <span class="n">SUBS_DICT</span>
+
+
+<span class="c1"># this can be anything, but x looks good when solving equations</span>
+<span class="n">UNKNOWN_PARAMETER</span> <span class="o">=</span> <span class="s2">&quot;x&quot;</span>
+
+
+<div class="viewcode-block" id="get_equations"><a class="viewcode-back" href="../../../source/datavalidation.validation.html#datavalidation.validation.equations.get_equations">[docs]</a><span class="k">def</span> <span class="nf">get_equations</span><span class="p">(</span><span class="n">parameter_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">filter_by</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	Gets a list of equations for the given GeometryParameter name. If a list of parameters is given as the filter,</span>
+<span class="sd">	it will return only those equations that can be calculated using that list.</span>
+<span class="sd">	For instance, if to calculate chainstay we need wheelbase and bb_drop, it will return the equation if the filter_by</span>
+<span class="sd">	list contains both the wheelbase and the bb_drop.</span>
+
+<span class="sd">	:param parameter_name: name of the GeometryParameter</span>
+<span class="sd">	:param filter_by: list of GeometryParameters available that are not empty</span>
+<span class="sd">	:return: list of equations, [] if none could be found</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="n">result_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+	<span class="n">regex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;{&#39;</span> <span class="o">+</span> <span class="n">parameter_name</span> <span class="o">+</span> <span class="s1">&#39;}&#39;</span><span class="p">)</span>
+	<span class="k">for</span> <span class="n">formula</span> <span class="ow">in</span> <span class="n">VALIDATION_FORMULAE</span><span class="p">:</span>
+		<span class="k">if</span> <span class="n">parameter_name</span> <span class="ow">in</span> <span class="n">formula</span><span class="p">[</span><span class="s1">&#39;parameters&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">regex</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">formula</span><span class="p">[</span><span class="s1">&#39;equation&#39;</span><span class="p">]))</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+			<span class="n">result_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">formula</span><span class="p">)</span>
+
+	<span class="k">if</span> <span class="n">filter_by</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="k">return</span> <span class="n">filter_equations</span><span class="p">(</span><span class="n">result_list</span><span class="p">,</span> <span class="n">filter_by</span><span class="p">,</span> <span class="n">parameter_name</span><span class="p">)</span>
+
+	<span class="k">return</span> <span class="n">result_list</span></div>
+
+
+<div class="viewcode-block" id="filter_equations"><a class="viewcode-back" href="../../../source/datavalidation.validation.html#datavalidation.validation.equations.filter_equations">[docs]</a><span class="k">def</span> <span class="nf">filter_equations</span><span class="p">(</span><span class="n">equation_list</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">filter_by</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">parameter_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	Filters a list of equations depending on a list of the GeometryParameters available.</span>
+
+<span class="sd">	:param equation_list: list of equations</span>
+<span class="sd">	:param filter_by: list of available GeometryParameters that are not empty</span>
+<span class="sd">	:param parameter_name: name of the parameter that you want to use (if known)</span>
+<span class="sd">	:return: list of filtered equations, [] if none left after filtering</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">equation_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">filter_by</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+		<span class="k">return</span> <span class="n">equation_list</span>
+
+	<span class="c1"># get only the parameter names of the list of GeometryParameters</span>
+	<span class="n">reduced_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">filter_by</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">]</span>
+
+	<span class="k">if</span> <span class="n">parameter_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="n">reduced_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">reduced_list</span> <span class="k">if</span> <span class="n">x</span> <span class="o">!=</span> <span class="n">parameter_name</span><span class="p">]</span>
+
+	<span class="n">result_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+	<span class="k">for</span> <span class="n">equation</span> <span class="ow">in</span> <span class="n">equation_list</span><span class="p">:</span>
+		<span class="c1"># count params of equation in the reduced list</span>
+		<span class="n">params</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">el</span> <span class="ow">in</span> <span class="n">equation</span><span class="p">[</span><span class="s1">&#39;parameters&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="n">reduced_list</span><span class="p">)</span>
+
+		<span class="k">if</span> <span class="n">params</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">equation</span><span class="p">[</span><span class="s1">&#39;parameters&#39;</span><span class="p">])</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+			<span class="n">result_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">equation</span><span class="p">)</span>
+
+	<span class="k">return</span> <span class="n">result_list</span></div>
+
+
+<div class="viewcode-block" id="solve_equation"><a class="viewcode-back" href="../../../source/datavalidation.validation.html#datavalidation.validation.equations.solve_equation">[docs]</a><span class="k">def</span> <span class="nf">solve_equation</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">symbol_to_solve</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">bike_geometry</span><span class="p">:</span> <span class="n">BikeGeometry</span><span class="p">,</span> <span class="n">force_constraints</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	Solves an equation and returns the possible solutions. This is the main function used to calculate parameter values.</span>
+<span class="sd">	Equations with square roots return multiple solutions, increasing exponentially with additional square roots in</span>
+<span class="sd">	the equation.</span>
+
+<span class="sd">	Examples::</span>
+
+<span class="sd">		&gt;&gt; formula = {</span>
+<span class="sd">			&quot;equation&quot;: &quot;SQRT({bb_drop}^2 + ({wheelbase} - SQRT( {front_centre}^2 - {bb_drop}^2 ))^2 ) - {chainstay}&quot;,</span>
+<span class="sd">			&quot;parameters&quot;: [ &quot;bb_drop&quot;, &quot;chainstay&quot;, &quot;wheelbase&quot;, &quot;front_centre&quot; ]</span>
+<span class="sd">		}</span>
+<span class="sd">		# get all solutions</span>
+<span class="sd">		&gt;&gt; solve_equation(formula, &quot;chainstay&quot;, bike_geometry, force_constraints=False)</span>
+<span class="sd">		[-200, 500, 1500]</span>
+<span class="sd">		# get solutions filtered by constraints</span>
+<span class="sd">		&gt;&gt; solve_equation(formula, &quot;chainstay&quot;, bike_geometry, force_constraints=True)</span>
+<span class="sd">		[500]</span>
+
+
+<span class="sd">	It is safe to use in parallel as it only reads values, it does not modify anything inside the BikeGeometry or its</span>
+<span class="sd">	GeometryParameters.</span>
+
+<span class="sd">	:param formula: a formula dict with an equation</span>
+<span class="sd">	:param symbol_to_solve: name of the GeometryParameter to solve the equation for</span>
+<span class="sd">	:param bike_geometry: the BikeGeometry</span>
+<span class="sd">	:param force_constraints: if the solutions returned should enforce geometry constraints, True by default</span>
+<span class="sd">	:return: list of possible solutions, [] if no solutions found</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="n">equation</span> <span class="o">=</span> <span class="n">substitute_operators</span><span class="p">(</span><span class="n">formula</span><span class="p">[</span><span class="s1">&#39;equation&#39;</span><span class="p">])</span>
+
+	<span class="c1"># replace parameters and the symbol_to_solve by x</span>
+	<span class="n">equation</span> <span class="o">=</span> <span class="n">substitute_parameters</span><span class="p">(</span><span class="n">equation</span><span class="p">,</span> <span class="n">formula</span><span class="p">[</span><span class="s1">&#39;parameters&#39;</span><span class="p">],</span> <span class="n">symbol_to_solve</span><span class="p">,</span> <span class="n">bike_geometry</span><span class="p">)</span>
+
+	<span class="n">x</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="n">UNKNOWN_PARAMETER</span><span class="p">,</span> <span class="n">positive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+	<span class="c1"># logging.debug(&quot;Solving for &quot; + symbol_to_solve)</span>
+	<span class="c1"># logging.debug(equation)</span>
+
+	<span class="k">try</span><span class="p">:</span>
+		<span class="c1"># although the following statements have been thoroughly tested and they do not crash,</span>
+		<span class="c1"># they are in a try/catch block to avoid any issues in production. The package sympy sometimes has</span>
+		<span class="c1"># unexpected execution and raises an exception if there was an error with the formula</span>
+		<span class="c1"># (it&#39;s due to the way that equations are solved in sympy, as expanding certain equations with some values</span>
+		<span class="c1"># make them unsolvable).</span>
+		<span class="n">expr</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">equation</span><span class="p">)</span>
+		<span class="n">results</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">solvers</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">sympy</span><span class="o">.</span><span class="n">S</span><span class="o">.</span><span class="n">Reals</span><span class="p">)</span>
+	<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+		<span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;There was an error solving the following equation for &#39;</span><span class="si">{}</span><span class="s2">&#39;: </span><span class="se">\n</span><span class="si">{}</span><span class="se">\n</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+			<span class="n">symbol_to_solve</span><span class="p">,</span> <span class="n">equation</span><span class="p">,</span> <span class="n">e</span><span class="p">))</span>
+		<span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+
+	<span class="c1"># logging.debug(&quot;   = &quot; + str(results))</span>
+
+	<span class="k">if</span> <span class="n">force_constraints</span><span class="p">:</span>
+		<span class="n">results</span> <span class="o">=</span> <span class="n">filter_by_constraints</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">symbol_to_solve</span><span class="p">,</span> <span class="n">bike_geometry</span><span class="p">)</span>
+
+	<span class="k">return</span> <span class="n">results</span></div>
+
+
+<div class="viewcode-block" id="substitute_operators"><a class="viewcode-back" href="../../../source/datavalidation.validation.html#datavalidation.validation.equations.substitute_operators">[docs]</a><span class="k">def</span> <span class="nf">substitute_operators</span><span class="p">(</span><span class="n">equation</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	Substitutes the operators in an equation (e.g. TAN for sympy.tan).</span>
+<span class="sd">	It accepts both an equation as a string or a list of equation strings.</span>
+
+<span class="sd">	:param equation: equation as a string or a list</span>
+<span class="sd">	:return: equation as a string or a list</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">equation</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+		<span class="k">return</span> <span class="p">[</span><span class="n">substitute_operators</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">equation</span><span class="p">]</span>
+
+	<span class="k">else</span><span class="p">:</span>
+		<span class="n">result</span> <span class="o">=</span> <span class="n">equation</span>
+
+		<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">SUBS_DICT</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+			<span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+
+		<span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="substitute_parameters"><a class="viewcode-back" href="../../../source/datavalidation.validation.html#datavalidation.validation.equations.substitute_parameters">[docs]</a><span class="k">def</span> <span class="nf">substitute_parameters</span><span class="p">(</span><span class="n">equation</span><span class="p">,</span> <span class="n">parameter_list</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">symbol_to_solve</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">bike_geometry</span><span class="p">:</span> <span class="n">BikeGeometry</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	Substitutes the GeometryParameters of an equation using the values from the BikeGeometry. In other words,</span>
+<span class="sd">	it substitutes the variables like {bb_drop} by their actual numeric value in the equation.</span>
+
+<span class="sd">	:param equation: equation as a string or a list</span>
+<span class="sd">	:param parameter_list: list of parameters of the equation</span>
+<span class="sd">	:param symbol_to_solve: GeometryParameter name to solve the equation for (aka the X)</span>
+<span class="sd">	:param bike_geometry: the BikeGeometry</span>
+<span class="sd">	:return: equation as a string or a list</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">equation</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+		<span class="k">return</span> <span class="p">[</span><span class="n">substitute_parameters</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">parameter_list</span><span class="p">,</span> <span class="n">symbol_to_solve</span><span class="p">,</span> <span class="n">bike_geometry</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">equation</span><span class="p">]</span>
+
+	<span class="k">else</span><span class="p">:</span>
+		<span class="n">equation</span> <span class="o">=</span> <span class="n">equation</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;{&quot;</span> <span class="o">+</span> <span class="n">symbol_to_solve</span> <span class="o">+</span> <span class="s2">&quot;}&quot;</span><span class="p">,</span> <span class="n">UNKNOWN_PARAMETER</span><span class="p">)</span>
+
+		<span class="c1"># substitute parameters</span>
+		<span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">parameter_list</span><span class="p">:</span>
+			<span class="n">bike_p</span> <span class="o">=</span> <span class="n">bike_geometry</span><span class="o">.</span><span class="n">get_parameter_value</span><span class="p">(</span><span class="n">param</span><span class="p">)</span>
+			<span class="n">equation</span> <span class="o">=</span> <span class="n">equation</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;{&quot;</span> <span class="o">+</span> <span class="n">param</span> <span class="o">+</span> <span class="s2">&quot;}&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">bike_p</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">bike_p</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="k">else</span> <span class="nb">str</span><span class="p">(</span><span class="n">bike_p</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+
+		<span class="k">return</span> <span class="n">equation</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Javier Chiyah Garcia
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

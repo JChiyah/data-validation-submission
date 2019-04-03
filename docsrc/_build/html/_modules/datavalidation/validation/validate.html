@@ -1,0 +1,445 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>datavalidation.validation.validate &mdash; Data Validation 1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Data Validation
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">Data Validation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../history.html">History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../implementation.html">Implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/modules.html">Documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Data Validation</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>datavalidation.validation.validate</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for datavalidation.validation.validate</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">validate</span>
+<span class="sd">----------------------------------</span>
+
+<span class="sd">Module with the main functionality of the validation process. It validates BikeGeometries and GeometryParameters, and</span>
+<span class="sd">calculates the GeometryParameters missing if possible.</span>
+
+<span class="sd">Author: Javier Chiyah, Heriot-Watt University, 2019</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">from</span> <span class="nn">..core</span> <span class="k">import</span> <span class="n">BikeGeometry</span><span class="p">,</span> <span class="n">GeometryParameter</span>
+<span class="kn">from</span> <span class="nn">.equations</span> <span class="k">import</span> <span class="n">get_equations</span><span class="p">,</span> <span class="n">solve_equation</span>
+<span class="kn">from</span> <span class="nn">.constraints</span> <span class="k">import</span> <span class="n">check_parameter_constraints</span><span class="p">,</span> <span class="n">get_parameter_deviation</span>
+
+
+<div class="viewcode-block" id="validate_bike_geometry"><a class="viewcode-back" href="../../../source/datavalidation.validation.html#datavalidation.validation.validate.validate_bike_geometry">[docs]</a><span class="k">def</span> <span class="nf">validate_bike_geometry</span><span class="p">(</span><span class="n">bike_geometry</span><span class="p">:</span> <span class="n">BikeGeometry</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	Validates a BikeGeometry. Be careful as it modifies the BikeGeometry in place!</span>
+
+<span class="sd">	After calling this function, the BikeGeometry has been modified in the following way:</span>
+
+<span class="sd">	- The GeometryParameters from inside the BikeGeometry that could be validated now have confidence values.</span>
+<span class="sd">	- Some GeometryParameters may be deemed invalid due to low confidence values.</span>
+<span class="sd">	- Some GeometryParameters may have new calculated values, even if the previous values were valid.</span>
+<span class="sd">	- Some GeometryParameters without a value may have a new value calculated by deriving it from others.</span>
+<span class="sd">	- The BikeGeometry can now be queried for a confidence value (get_confidence_score()).</span>
+
+<span class="sd">	:param bike_geometry: BikeGeometry object to validate</span>
+<span class="sd">	:return: None</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="n">change_flag</span> <span class="o">=</span> <span class="kc">True</span>
+
+	<span class="c1"># loop as long as the list of parameters is increasing (they are being calculated)</span>
+	<span class="k">while</span> <span class="n">change_flag</span><span class="p">:</span>
+		<span class="n">missing_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">bike_geometry</span><span class="o">.</span><span class="n">get_missing_parameter_list</span><span class="p">())</span>
+
+		<span class="n">calculate_missing_parameters</span><span class="p">(</span><span class="n">bike_geometry</span><span class="p">)</span>
+
+		<span class="c1"># set change_flag to False if the list of parameters didn&#39;t increase</span>
+		<span class="n">change_flag</span> <span class="o">=</span> <span class="n">missing_len</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">bike_geometry</span><span class="o">.</span><span class="n">get_missing_parameter_list</span><span class="p">())</span>
+
+	<span class="c1"># note that this loop can be executed in parallel and it is likely to be the most expensive loop of the package</span>
+	<span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">bike_geometry</span><span class="o">.</span><span class="n">get_parameter_list</span><span class="p">():</span>
+		<span class="n">validate_geometry_parameter</span><span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="n">bike_geometry</span><span class="p">)</span>
+
+	<span class="c1"># calculate parameters again to give values to invalid parameters</span>
+	<span class="c1"># no need to do this anymore as validate will add the parameter&#39;s calculated values by default now</span>
+	<span class="c1"># calculate_missing_parameters(bike_geometry)</span>
+
+	<span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;BikeGeometry validated&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="validate_geometry_parameter"><a class="viewcode-back" href="../../../source/datavalidation.validation.html#datavalidation.validation.validate.validate_geometry_parameter">[docs]</a><span class="k">def</span> <span class="nf">validate_geometry_parameter</span><span class="p">(</span><span class="n">parameter</span><span class="p">:</span> <span class="n">GeometryParameter</span><span class="p">,</span> <span class="n">bike_geometry</span><span class="p">:</span> <span class="n">BikeGeometry</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	Validates a GeometryParameter of the BikeGeometry. It modifies the GeometryParameter but not the BikeGeometry.</span>
+
+<span class="sd">	After calling this function in a GeometryParameter, it will:</span>
+
+<span class="sd">	- Have a confidence value if we were able to validate it.</span>
+<span class="sd">	- Have a new calculated value if we were able to validate it.</span>
+
+<span class="sd">	:param parameter: GeometryParameter inside the BikeGeometry</span>
+<span class="sd">	:param bike_geometry: the BikeGeometry</span>
+<span class="sd">	:return: None</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="k">if</span> <span class="ow">not</span> <span class="n">parameter</span><span class="o">.</span><span class="n">is_number</span><span class="p">()</span> <span class="ow">or</span> <span class="n">parameter</span><span class="o">.</span><span class="n">calculated_value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="c1"># either not a number or it already has a calculated value</span>
+		<span class="c1"># if the parameter reached this with a calculated value, it is skipped, as we do not validate those parameters</span>
+		<span class="c1"># calculated by the `calculate_missing_parameters()` function</span>
+		<span class="k">return</span> <span class="kc">None</span>
+
+	<span class="n">equation_list</span> <span class="o">=</span> <span class="n">get_equations</span><span class="p">(</span><span class="n">parameter</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">bike_geometry</span><span class="o">.</span><span class="n">get_parameter_list</span><span class="p">())</span>
+
+	<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">equation_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+		<span class="k">for</span> <span class="n">formula</span> <span class="ow">in</span> <span class="n">equation_list</span><span class="p">:</span>
+			<span class="n">new_values</span> <span class="o">=</span> <span class="n">solve_equation</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">parameter</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">bike_geometry</span><span class="p">)</span>
+
+			<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_values</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+				<span class="k">if</span> <span class="n">parameter</span><span class="o">.</span><span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+					<span class="c1"># parameter has no value, this should never happen, but left here for legacy purposes</span>
+					<span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;GeometryParameter(&#39;</span><span class="si">{}</span><span class="s2">&#39;) has reached a deprecated code section in &quot;</span>
+									<span class="s2">&quot;validate.validate_geometry_parameter&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">parameter</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+					<span class="n">parameter</span><span class="o">.</span><span class="n">set_calculated_value</span><span class="p">(</span><span class="n">new_values</span><span class="p">)</span>
+
+				<span class="k">elif</span> <span class="n">parameter</span><span class="o">.</span><span class="n">calculated_value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+					<span class="c1"># only valid branch at this point as the rest are deprecated</span>
+					<span class="n">param_values</span> <span class="o">=</span> <span class="n">parameter</span><span class="o">.</span><span class="n">normalised_value</span>
+
+					<span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">param_values</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+						<span class="n">param_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">param_values</span><span class="p">]</span>
+
+					<span class="c1"># keep a list with similarity</span>
+					<span class="n">similarity_list</span> <span class="o">=</span> <span class="p">[]</span>
+					<span class="k">for</span> <span class="n">param_val</span> <span class="ow">in</span> <span class="n">param_values</span><span class="p">:</span>
+						<span class="n">similarity_list</span><span class="o">.</span><span class="n">extend</span><span class="p">([(</span><span class="n">get_value_similarity</span><span class="p">(</span><span class="n">param_val</span><span class="p">,</span> <span class="n">new_val</span><span class="p">),</span> <span class="n">new_val</span><span class="p">)</span> <span class="k">for</span> <span class="n">new_val</span> <span class="ow">in</span> <span class="n">new_values</span><span class="p">])</span>
+
+					<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">similarity_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+						<span class="n">best_case</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">similarity_list</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">l</span><span class="p">:</span> <span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+						<span class="c1"># adjust confidence from the average of the list calculated earlier</span>
+						<span class="n">parameter</span><span class="o">.</span><span class="n">set_confidence</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">l</span><span class="p">:</span> <span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">similarity_list</span><span class="p">))</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">similarity_list</span><span class="p">))</span>
+
+						<span class="c1"># set the calculated value to be the best value found</span>
+						<span class="n">parameter</span><span class="o">.</span><span class="n">set_calculated_value</span><span class="p">(</span><span class="n">best_case</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">change_confidence</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+			<span class="k">else</span><span class="p">:</span>
+				<span class="c1"># it should never reach this code either</span>
+				<span class="n">_set_confidence_from_deviation</span><span class="p">(</span><span class="n">parameter</span><span class="p">)</span>
+	<span class="k">else</span><span class="p">:</span>
+		<span class="c1"># parameter could not be validated using maths, so use deviation from average statistics instead</span>
+		<span class="c1"># note how invert is True, so we are getting (1 - deviation) for confidence</span>
+		<span class="n">_set_confidence_from_deviation</span><span class="p">(</span><span class="n">parameter</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="calculate_missing_parameters"><a class="viewcode-back" href="../../../source/datavalidation.validation.html#datavalidation.validation.validate.calculate_missing_parameters">[docs]</a><span class="k">def</span> <span class="nf">calculate_missing_parameters</span><span class="p">(</span><span class="n">bike_geometry</span><span class="p">:</span> <span class="n">BikeGeometry</span><span class="p">,</span> <span class="n">include_invalid</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	Calculates missing GeometryParameters of a BikeGeometry if possible. It modifies the BikeGeometry in place!</span>
+
+<span class="sd">	Missing parameters are defined in the function BikeGeometry.get_missing_parameter_list().</span>
+<span class="sd">	It also includes invalid parameters, from the function get_invalid_parameters().</span>
+
+<span class="sd">	:param bike_geometry: the BikeGeometry</span>
+<span class="sd">	:param include_invalid: if it should calculate invalid parameters too, default is True</span>
+<span class="sd">	:return: None</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="c1"># get a list with all the missing or invalid parameters (only the names)</span>
+	<span class="n">parameter_list</span> <span class="o">=</span> <span class="n">bike_geometry</span><span class="o">.</span><span class="n">get_missing_parameter_list</span><span class="p">()</span>
+	<span class="k">if</span> <span class="n">include_invalid</span><span class="p">:</span>
+		<span class="n">parameter_list</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">get_invalid_parameters</span><span class="p">(</span><span class="n">bike_geometry</span><span class="p">))</span>
+
+	<span class="c1"># this loop can be executed in parallel if needed as it only modifies the parameter given in the arguments</span>
+	<span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">parameter_list</span><span class="p">:</span>
+		<span class="n">calculate_parameter</span><span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="n">bike_geometry</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="calculate_parameter"><a class="viewcode-back" href="../../../source/datavalidation.validation.html#datavalidation.validation.validate.calculate_parameter">[docs]</a><span class="k">def</span> <span class="nf">calculate_parameter</span><span class="p">(</span><span class="n">parameter_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">bike_geometry</span><span class="p">:</span> <span class="n">BikeGeometry</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	Calculates the value of a parameter and sets it confidence value if it can derived from the geometry statistics.</span>
+<span class="sd">	It modifies the GeometryParameter given in the BikeGeometry (or creates one if it does not exists).</span>
+
+<span class="sd">	:param parameter_name: name of the GeometryParameter</span>
+<span class="sd">	:param bike_geometry: the BikeGeometry</span>
+<span class="sd">	:return: None</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="n">parameter</span> <span class="o">=</span> <span class="n">bike_geometry</span><span class="o">.</span><span class="n">get_parameter</span><span class="p">(</span><span class="n">parameter_name</span><span class="p">)</span>
+
+	<span class="c1"># check if parameter exists</span>
+	<span class="k">if</span> <span class="n">parameter</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="n">parameter</span> <span class="o">=</span> <span class="n">GeometryParameter</span><span class="p">(</span><span class="n">parameter_name</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+		<span class="n">bike_geometry</span><span class="o">.</span><span class="n">set_parameter</span><span class="p">(</span><span class="n">parameter</span><span class="p">)</span>
+
+	<span class="c1"># check if it has already been calculated (e.g. in a previous iteration)</span>
+	<span class="k">elif</span> <span class="n">parameter</span><span class="o">.</span><span class="n">calculated_value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="c1"># skip this iteration</span>
+		<span class="k">return</span>
+
+	<span class="c1"># set confidence from deviation first to save previous confidence (if it can be calculated)</span>
+	<span class="n">_set_confidence_from_deviation</span><span class="p">(</span><span class="n">parameter</span><span class="p">)</span>
+
+	<span class="n">equation_list</span> <span class="o">=</span> <span class="n">get_equations</span><span class="p">(</span><span class="n">parameter</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">bike_geometry</span><span class="o">.</span><span class="n">get_parameter_list</span><span class="p">())</span>
+
+	<span class="k">for</span> <span class="n">formula</span> <span class="ow">in</span> <span class="n">equation_list</span><span class="p">:</span>
+		<span class="n">new_values</span> <span class="o">=</span> <span class="n">solve_equation</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">parameter</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">bike_geometry</span><span class="p">)</span>
+
+		<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_values</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+			<span class="n">parameter</span><span class="o">.</span><span class="n">set_calculated_value</span><span class="p">(</span><span class="n">new_values</span><span class="p">,</span> <span class="n">change_confidence</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_invalid_parameters"><a class="viewcode-back" href="../../../source/datavalidation.validation.html#datavalidation.validation.validate.get_invalid_parameters">[docs]</a><span class="k">def</span> <span class="nf">get_invalid_parameters</span><span class="p">(</span><span class="n">bike_geometry</span><span class="p">:</span> <span class="n">BikeGeometry</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	Gets a list with the names of invalid GeometryParameters of a BikeGeometry that are numbers (that can be calculated).</span>
+<span class="sd">	An invalid parameters is defined by the function is_parameter_invalid().</span>
+
+<span class="sd">	Note: this function should be inside BikeGeometry, but is_parameter_invalid() uses the geometry constraints, thus</span>
+<span class="sd">	it is best to keep the core of the datavalidation module (BikeGeometry) separated from the constraints module.</span>
+
+<span class="sd">	:param bike_geometry: the BikeGeometry</span>
+<span class="sd">	:return: list of invalid parameters (list of str)</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="n">invalid_params</span> <span class="o">=</span> <span class="p">[]</span>
+
+	<span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">bike_geometry</span><span class="o">.</span><span class="n">get_parameter_list</span><span class="p">():</span>
+		<span class="k">if</span> <span class="n">param</span><span class="o">.</span><span class="n">is_number</span><span class="p">()</span> <span class="ow">and</span> <span class="n">is_parameter_invalid</span><span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="n">bike_geometry</span><span class="p">):</span>
+			<span class="c1"># this means that the parameter is likely wrong</span>
+			<span class="n">invalid_params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+	<span class="k">return</span> <span class="n">invalid_params</span></div>
+
+
+<div class="viewcode-block" id="get_value_similarity"><a class="viewcode-back" href="../../../source/datavalidation.validation.html#datavalidation.validation.validate.get_value_similarity">[docs]</a><span class="k">def</span> <span class="nf">get_value_similarity</span><span class="p">(</span><span class="n">value1</span><span class="p">,</span> <span class="n">value2</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	Gets the similarity between two values.</span>
+<span class="sd">	The similarity is a number between 0 and 1 as a percentage where 1 means that the values are the same and 0</span>
+<span class="sd">	means that the values are completely different.</span>
+<span class="sd">	This function is duplicated in the constraints module. A common utility file could improve this...</span>
+
+<span class="sd">	:param value1: value</span>
+<span class="sd">	:param value2: value</span>
+<span class="sd">	:return: (0 to 1) percentage float of how close value1 is to value2</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value2</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+		<span class="c1"># if value2 is a list, then return the one with least similarity from the whole similarity list</span>
+		<span class="n">val_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">get_value_similarity</span><span class="p">(</span><span class="n">value1</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">value2</span><span class="p">]</span>
+		<span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="n">val_list</span><span class="p">)</span>
+
+	<span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="nb">min</span><span class="p">([</span><span class="n">value1</span><span class="p">,</span> <span class="n">value2</span><span class="p">]))</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="nb">max</span><span class="p">([</span><span class="n">value1</span><span class="p">,</span> <span class="n">value2</span><span class="p">]))</span></div>
+
+
+<div class="viewcode-block" id="is_parameter_invalid"><a class="viewcode-back" href="../../../source/datavalidation.validation.html#datavalidation.validation.validate.is_parameter_invalid">[docs]</a><span class="k">def</span> <span class="nf">is_parameter_invalid</span><span class="p">(</span><span class="n">parameter</span><span class="p">:</span> <span class="n">GeometryParameter</span><span class="p">,</span> <span class="n">bike_geometry</span><span class="p">:</span> <span class="n">BikeGeometry</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	Checks if a GeometryParameter is invalid.</span>
+
+<span class="sd">	A GeometryParameter is invalid if:</span>
+
+<span class="sd">	- The parameter has very low confidence.</span>
+<span class="sd">	- The parameter does not satisfy geometry constraints.</span>
+<span class="sd">	- The parameter is too deviated from normal constraints.</span>
+
+<span class="sd">	Note: this function should be inside BikeGeometry, but it uses the geometry constraints, thus</span>
+<span class="sd">	it is best to keep the core of the datavalidation module (BikeGeometry) separated from the constraints module.</span>
+
+<span class="sd">	:param parameter: GeometryParameter to check</span>
+<span class="sd">	:param bike_geometry: BikeGeometry to make the comparison</span>
+<span class="sd">	:return: bool, True if the parameter IS invalid</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="c1"># TODO: change the access to private member _PARAMETER_THRESHOLD</span>
+	<span class="k">return</span> <span class="ow">not</span> <span class="n">check_parameter_constraints</span><span class="p">(</span><span class="n">parameter</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">bike_geometry</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span>
+		<span class="n">parameter</span><span class="o">.</span><span class="n">confidence</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">parameter</span><span class="o">.</span><span class="n">confidence</span> <span class="o">&lt;</span> <span class="n">bike_geometry</span><span class="o">.</span><span class="n">_PARAMETER_THRESHOLD</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_set_confidence_from_deviation</span><span class="p">(</span><span class="n">parameter</span><span class="p">:</span> <span class="n">GeometryParameter</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	Sets the confidence value of the parameter based on its deviation from the normal geometry statistics.</span>
+<span class="sd">	It is safe to call even when the deviation cannot be calculated.</span>
+
+<span class="sd">	:param parameter: GeometryParameter to set confidence</span>
+<span class="sd">	:return: None</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="n">deviation</span> <span class="o">=</span> <span class="n">get_parameter_deviation</span><span class="p">(</span><span class="n">parameter</span><span class="p">,</span> <span class="n">invert</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+	<span class="k">if</span> <span class="n">deviation</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="n">parameter</span><span class="o">.</span><span class="n">set_confidence</span><span class="p">(</span><span class="n">deviation</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Javier Chiyah Garcia
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

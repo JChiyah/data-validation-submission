@@ -1,0 +1,250 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>datavalidation.normalisation.measure &mdash; Data Validation 1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Data Validation
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">Data Validation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../history.html">History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../implementation.html">Implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/modules.html">Documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Data Validation</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>datavalidation.normalisation.measure</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for datavalidation.normalisation.measure</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">measure</span>
+<span class="sd">----------------------------------</span>
+
+<span class="sd">Module that contains functions to normalise GeometryParameters with measures (angles, metres, millimetres, etc.).</span>
+
+<span class="sd">Author: Javier Chiyah, Heriot-Watt University, 2019</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="kn">import</span> <span class="nn">math</span>
+
+<span class="kn">from</span> <span class="nn">..core</span> <span class="k">import</span> <span class="n">GeometryParameter</span>
+<span class="c1"># from ..core.constants import GEOMETRY_MEASURES</span>
+
+
+<span class="n">INCHES_TO_MM</span> <span class="o">=</span> <span class="mf">25.4</span>
+
+
+<div class="viewcode-block" id="normalise_measure"><a class="viewcode-back" href="../../../source/datavalidation.normalisation.html#datavalidation.normalisation.measure.normalise_measure">[docs]</a><span class="k">def</span> <span class="nf">normalise_measure</span><span class="p">(</span><span class="n">parameter</span><span class="p">:</span> <span class="n">GeometryParameter</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	NOT IMPLEMENTED</span>
+<span class="sd">	Normalises a number parameter that is a metric of some sort</span>
+
+<span class="sd">	:param parameter: GeometryParameter to normalise</span>
+<span class="sd">	:return: None</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="c1"># not implemented</span>
+	<span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="normalise_range_measure"><a class="viewcode-back" href="../../../source/datavalidation.normalisation.html#datavalidation.normalisation.measure.normalise_range_measure">[docs]</a><span class="k">def</span> <span class="nf">normalise_range_measure</span><span class="p">(</span><span class="n">parameter</span><span class="p">:</span> <span class="n">GeometryParameter</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	Normalises range parameters that may be the same value in different metrics.</span>
+
+<span class="sd">	This checks for things like [1, 25.4], where the first is the second one in millimetres or vice-versa.</span>
+<span class="sd">	Note that this only works with lists of length 2.</span>
+
+<span class="sd">	:param parameter: GeometryParameter to normalise</span>
+<span class="sd">	:return: None</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="c1"># check if first value is in inches</span>
+	<span class="k">if</span> <span class="n">math</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">parameter</span><span class="o">.</span><span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">INCHES_TO_MM</span><span class="p">,</span> <span class="n">parameter</span><span class="o">.</span><span class="n">value</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">abs_tol</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+		<span class="c1"># delete first one</span>
+		<span class="n">parameter</span><span class="o">.</span><span class="n">set_normalised_value</span><span class="p">(</span><span class="n">parameter</span><span class="o">.</span><span class="n">value</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+	<span class="k">elif</span> <span class="n">math</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">parameter</span><span class="o">.</span><span class="n">value</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">INCHES_TO_MM</span><span class="p">,</span> <span class="n">parameter</span><span class="o">.</span><span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">abs_tol</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+		<span class="c1"># delete second one</span>
+		<span class="n">parameter</span><span class="o">.</span><span class="n">set_normalised_value</span><span class="p">(</span><span class="n">parameter</span><span class="o">.</span><span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Javier Chiyah Garcia
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

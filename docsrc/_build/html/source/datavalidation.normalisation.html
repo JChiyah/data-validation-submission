@@ -1,0 +1,392 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>normalisation package &mdash; Data Validation 1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="validation package" href="datavalidation.validation.html" />
+    <link rel="prev" title="core package" href="datavalidation.core.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Data Validation
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">Data Validation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../history.html">History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../implementation.html">Implementation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="modules.html#implementation">Implementation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#commands">Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#style">Style</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="modules.html#package">Package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="datavalidation.html">datavalidation package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="datavalidation.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="datavalidation.html#module-datavalidation.datavalidation">datavalidation module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Data Validation</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">Documentation</a> &raquo;</li>
+        
+          <li><a href="datavalidation.html">datavalidation package</a> &raquo;</li>
+        
+      <li>normalisation package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/source/datavalidation.normalisation.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="normalisation-package">
+<h1>normalisation package<a class="headerlink" href="#normalisation-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-datavalidation.normalisation.measure">
+<span id="normalisation-measure-module"></span><h2>normalisation.measure module<a class="headerlink" href="#module-datavalidation.normalisation.measure" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="measure">
+<h3>measure<a class="headerlink" href="#measure" title="Permalink to this headline">¶</a></h3>
+<p>Module that contains functions to normalise GeometryParameters with measures (angles, metres, millimetres, etc.).</p>
+<p>Author: Javier Chiyah, Heriot-Watt University, 2019</p>
+<dl class="function">
+<dt id="datavalidation.normalisation.measure.normalise_measure">
+<code class="descclassname">datavalidation.normalisation.measure.</code><code class="descname">normalise_measure</code><span class="sig-paren">(</span><em>parameter: datavalidation.core.geometryparameter.GeometryParameter</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datavalidation/normalisation/measure.html#normalise_measure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datavalidation.normalisation.measure.normalise_measure" title="Permalink to this definition">¶</a></dt>
+<dd><p>NOT IMPLEMENTED
+Normalises a number parameter that is a metric of some sort</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parameter</strong> – GeometryParameter to normalise</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="datavalidation.normalisation.measure.normalise_range_measure">
+<code class="descclassname">datavalidation.normalisation.measure.</code><code class="descname">normalise_range_measure</code><span class="sig-paren">(</span><em>parameter: datavalidation.core.geometryparameter.GeometryParameter</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datavalidation/normalisation/measure.html#normalise_range_measure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datavalidation.normalisation.measure.normalise_range_measure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Normalises range parameters that may be the same value in different metrics.</p>
+<p>This checks for things like [1, 25.4], where the first is the second one in millimetres or vice-versa.
+Note that this only works with lists of length 2.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parameter</strong> – GeometryParameter to normalise</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="module-datavalidation.normalisation.normalise">
+<span id="normalisation-normalise-module"></span><h2>normalisation.normalise module<a class="headerlink" href="#module-datavalidation.normalisation.normalise" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="normalise">
+<h3>normalise<a class="headerlink" href="#normalise" title="Permalink to this headline">¶</a></h3>
+<p>Module that contains functions to normalise GeometryParameters. It is the main file of the normalisation module.</p>
+<p>Author: Javier Chiyah, Heriot-Watt University, 2019</p>
+<dl class="function">
+<dt id="datavalidation.normalisation.normalise.normalise_bike_geometry">
+<code class="descclassname">datavalidation.normalisation.normalise.</code><code class="descname">normalise_bike_geometry</code><span class="sig-paren">(</span><em>bike_geometry: datavalidation.core.bikegeometry.BikeGeometry</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datavalidation/normalisation/normalise.html#normalise_bike_geometry"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datavalidation.normalisation.normalise.normalise_bike_geometry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Normalises the GeometryParameters inside a BikeGeometry.
+It modifies the BikeGeometry in place!</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>bike_geometry</strong> – BikeGeometry</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="datavalidation.normalisation.normalise.normalise_parameter">
+<code class="descclassname">datavalidation.normalisation.normalise.</code><code class="descname">normalise_parameter</code><span class="sig-paren">(</span><em>parameter: datavalidation.core.geometryparameter.GeometryParameter</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datavalidation/normalisation/normalise.html#normalise_parameter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datavalidation.normalisation.normalise.normalise_parameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Normalises a GeometryParameter, eliminating additional characters or recognising a range of values.
+It modifies the GeometryParameter in place.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parameter</strong> – GeometryParameter</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="module-datavalidation.normalisation.number">
+<span id="normalisation-number-module"></span><h2>normalisation.number module<a class="headerlink" href="#module-datavalidation.normalisation.number" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="number">
+<h3>number<a class="headerlink" href="#number" title="Permalink to this headline">¶</a></h3>
+<p>Module with functions that normalise GeometryParameter that are numbers (integers, floats, ranges, etc.).</p>
+<p>Author: Mario Vasilev and Javier Chiyah, Heriot-Watt University, 2019</p>
+<dl class="function">
+<dt id="datavalidation.normalisation.number.is_range_parameter">
+<code class="descclassname">datavalidation.normalisation.number.</code><code class="descname">is_range_parameter</code><span class="sig-paren">(</span><em>parameter: datavalidation.core.geometryparameter.GeometryParameter</em><span class="sig-paren">)</span> &#x2192; bool<a class="reference internal" href="../_modules/datavalidation/normalisation/number.html#is_range_parameter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datavalidation.normalisation.number.is_range_parameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if the GeometryParameter is a range (e.g. “170/180” or “170 - 180”).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parameter</strong> – GeometryParameter to check</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">bool, True if the parameter has a value that is a range</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="datavalidation.normalisation.number.normalise_float">
+<code class="descclassname">datavalidation.normalisation.number.</code><code class="descname">normalise_float</code><span class="sig-paren">(</span><em>parameter: datavalidation.core.geometryparameter.GeometryParameter</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datavalidation/normalisation/number.html#normalise_float"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datavalidation.normalisation.number.normalise_float" title="Permalink to this definition">¶</a></dt>
+<dd><p>Normalises a GeometryParameter that is a float.</p>
+<p>Author: Mario Vasilev</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parameter</strong> – GeometryParameter to normalise</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="datavalidation.normalisation.number.normalise_number">
+<code class="descclassname">datavalidation.normalisation.number.</code><code class="descname">normalise_number</code><span class="sig-paren">(</span><em>parameter: datavalidation.core.geometryparameter.GeometryParameter</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datavalidation/normalisation/number.html#normalise_number"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datavalidation.normalisation.number.normalise_number" title="Permalink to this definition">¶</a></dt>
+<dd><p>Normalises a GeometryParameters which is a number</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parameter</strong> – GeometryParameter to normalise</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="datavalidation.normalisation.number.normalise_range">
+<code class="descclassname">datavalidation.normalisation.number.</code><code class="descname">normalise_range</code><span class="sig-paren">(</span><em>parameter: datavalidation.core.geometryparameter.GeometryParameter</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datavalidation/normalisation/number.html#normalise_range"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datavalidation.normalisation.number.normalise_range" title="Permalink to this definition">¶</a></dt>
+<dd><p>Normalises a GeometryParameter that is a range, possibly composed of 1 or more floats.</p>
+<p>Author: Mario Vasilev</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parameter</strong> – GeometryParameter to normalise</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="datavalidation.validation.html" class="btn btn-neutral float-right" title="validation package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="datavalidation.core.html" class="btn btn-neutral float-left" title="core package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Javier Chiyah Garcia
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

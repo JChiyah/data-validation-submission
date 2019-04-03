@@ -1,0 +1,626 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>validation package &mdash; Data Validation 1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="normalisation package" href="datavalidation.normalisation.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Data Validation
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">Data Validation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../history.html">History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../implementation.html">Implementation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="modules.html#implementation">Implementation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#commands">Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#style">Style</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="modules.html#package">Package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="datavalidation.html">datavalidation package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="datavalidation.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="datavalidation.html#module-datavalidation.datavalidation">datavalidation module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Data Validation</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">Documentation</a> &raquo;</li>
+        
+          <li><a href="datavalidation.html">datavalidation package</a> &raquo;</li>
+        
+      <li>validation package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/source/datavalidation.validation.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="validation-package">
+<h1>validation package<a class="headerlink" href="#validation-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-datavalidation.validation.constraints">
+<span id="validation-constraints-module"></span><h2>validation.constraints module<a class="headerlink" href="#module-datavalidation.validation.constraints" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="constraints">
+<h3>constraints<a class="headerlink" href="#constraints" title="Permalink to this headline">¶</a></h3>
+<p>Module containing functions that check the constraints of GeometryParameters and the BikeGeometry in general</p>
+<p>Author: Javier Chiyah, Heriot-Watt University, 2019</p>
+<dl class="function">
+<dt id="datavalidation.validation.constraints.check_parameter_constraints">
+<code class="descclassname">datavalidation.validation.constraints.</code><code class="descname">check_parameter_constraints</code><span class="sig-paren">(</span><em>parameter_name: str</em>, <em>bike_geometry: datavalidation.core.bikegeometry.BikeGeometry</em><span class="sig-paren">)</span> &#x2192; bool<a class="reference internal" href="../_modules/datavalidation/validation/constraints.html#check_parameter_constraints"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datavalidation.validation.constraints.check_parameter_constraints" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks that the GeometryParameter satisfies all the geometry constraints.
+It also checks the geometry statistics, so even if the parameter does NOT satisfy the geometry constraints,
+this function may return True when the issue is likely to be from another parameter of the bike geometry.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>parameter_name</strong> – name of the GeometryParameter</li>
+<li><strong>bike_geometry</strong> – BikeGeometry</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">bool, True if the GeometryParameter satisfies constraints (or the issue is with another parameter)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="datavalidation.validation.constraints.filter_by_constraints">
+<code class="descclassname">datavalidation.validation.constraints.</code><code class="descname">filter_by_constraints</code><span class="sig-paren">(</span><em>value_list: list</em>, <em>parameter_name: str</em>, <em>bike_geometry: datavalidation.core.bikegeometry.BikeGeometry</em><span class="sig-paren">)</span> &#x2192; list<a class="reference internal" href="../_modules/datavalidation/validation/constraints.html#filter_by_constraints"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datavalidation.validation.constraints.filter_by_constraints" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filters a list of values depending on the BikeGeometry constraints and the GeometryParameter they belong to.
+It returns the filtered list, which can be empty if no values passed the checks.</p>
+<p>This is used to, for instance, filter the solutions to the equations to only those that are possible.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>value_list</strong> – list of possible values</li>
+<li><strong>parameter_name</strong> – name of the GeometryParameter to which the values would apply to</li>
+<li><strong>bike_geometry</strong> – the BikeGeometry</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">filtered list of values, it can be empty []</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="datavalidation.validation.constraints.get_parameter_deviation">
+<code class="descclassname">datavalidation.validation.constraints.</code><code class="descname">get_parameter_deviation</code><span class="sig-paren">(</span><em>parameter: datavalidation.core.geometryparameter.GeometryParameter</em>, <em>invert: bool = False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datavalidation/validation/constraints.html#get_parameter_deviation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datavalidation.validation.constraints.get_parameter_deviation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the parameter deviation from the normal geometry statistics.
+Deviation is in the range of 0 to 1.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>parameter</strong> – GeometryParameter</li>
+<li><strong>invert</strong> – bool, give True to calculate the inverted deviation (1 - dev) when dev is not None. False by default</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">float or None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="module-datavalidation.validation.equations">
+<span id="validation-equations-module"></span><h2>validation.equations module<a class="headerlink" href="#module-datavalidation.validation.equations" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="equations">
+<h3>equations<a class="headerlink" href="#equations" title="Permalink to this headline">¶</a></h3>
+<p>Module containing functions that get and solve equations for a given GeometryParameter.</p>
+<p>Author: Javier Chiyah, Heriot-Watt University, 2019</p>
+<dl class="function">
+<dt id="datavalidation.validation.equations.filter_equations">
+<code class="descclassname">datavalidation.validation.equations.</code><code class="descname">filter_equations</code><span class="sig-paren">(</span><em>equation_list: list</em>, <em>filter_by: list = None</em>, <em>parameter_name: str = None</em><span class="sig-paren">)</span> &#x2192; list<a class="reference internal" href="../_modules/datavalidation/validation/equations.html#filter_equations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datavalidation.validation.equations.filter_equations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filters a list of equations depending on a list of the GeometryParameters available.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>equation_list</strong> – list of equations</li>
+<li><strong>filter_by</strong> – list of available GeometryParameters that are not empty</li>
+<li><strong>parameter_name</strong> – name of the parameter that you want to use (if known)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">list of filtered equations, [] if none left after filtering</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="datavalidation.validation.equations.get_equations">
+<code class="descclassname">datavalidation.validation.equations.</code><code class="descname">get_equations</code><span class="sig-paren">(</span><em>parameter_name: str</em>, <em>filter_by: list = None</em><span class="sig-paren">)</span> &#x2192; list<a class="reference internal" href="../_modules/datavalidation/validation/equations.html#get_equations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datavalidation.validation.equations.get_equations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a list of equations for the given GeometryParameter name. If a list of parameters is given as the filter,
+it will return only those equations that can be calculated using that list.
+For instance, if to calculate chainstay we need wheelbase and bb_drop, it will return the equation if the filter_by
+list contains both the wheelbase and the bb_drop.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>parameter_name</strong> – name of the GeometryParameter</li>
+<li><strong>filter_by</strong> – list of GeometryParameters available that are not empty</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">list of equations, [] if none could be found</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="datavalidation.validation.equations.solve_equation">
+<code class="descclassname">datavalidation.validation.equations.</code><code class="descname">solve_equation</code><span class="sig-paren">(</span><em>formula</em>, <em>symbol_to_solve: str</em>, <em>bike_geometry: datavalidation.core.bikegeometry.BikeGeometry</em>, <em>force_constraints: bool = True</em><span class="sig-paren">)</span> &#x2192; list<a class="reference internal" href="../_modules/datavalidation/validation/equations.html#solve_equation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datavalidation.validation.equations.solve_equation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Solves an equation and returns the possible solutions. This is the main function used to calculate parameter values.
+Equations with square roots return multiple solutions, increasing exponentially with additional square roots in
+the equation.</p>
+<p>Examples:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span> <span class="n">formula</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;equation&quot;</span><span class="p">:</span> <span class="s2">&quot;SQRT(</span><span class="si">{bb_drop}</span><span class="s2">^2 + (</span><span class="si">{wheelbase}</span><span class="s2"> - SQRT( </span><span class="si">{front_centre}</span><span class="s2">^2 - </span><span class="si">{bb_drop}</span><span class="s2">^2 ))^2 ) - </span><span class="si">{chainstay}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;parameters&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="s2">&quot;bb_drop&quot;</span><span class="p">,</span> <span class="s2">&quot;chainstay&quot;</span><span class="p">,</span> <span class="s2">&quot;wheelbase&quot;</span><span class="p">,</span> <span class="s2">&quot;front_centre&quot;</span> <span class="p">]</span>
+<span class="p">}</span>
+<span class="c1"># get all solutions</span>
+<span class="o">&gt;&gt;</span> <span class="n">solve_equation</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="s2">&quot;chainstay&quot;</span><span class="p">,</span> <span class="n">bike_geometry</span><span class="p">,</span> <span class="n">force_constraints</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="p">[</span><span class="o">-</span><span class="mi">200</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">1500</span><span class="p">]</span>
+<span class="c1"># get solutions filtered by constraints</span>
+<span class="o">&gt;&gt;</span> <span class="n">solve_equation</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="s2">&quot;chainstay&quot;</span><span class="p">,</span> <span class="n">bike_geometry</span><span class="p">,</span> <span class="n">force_constraints</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">500</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>It is safe to use in parallel as it only reads values, it does not modify anything inside the BikeGeometry or its
+GeometryParameters.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>formula</strong> – a formula dict with an equation</li>
+<li><strong>symbol_to_solve</strong> – name of the GeometryParameter to solve the equation for</li>
+<li><strong>bike_geometry</strong> – the BikeGeometry</li>
+<li><strong>force_constraints</strong> – if the solutions returned should enforce geometry constraints, True by default</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">list of possible solutions, [] if no solutions found</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="datavalidation.validation.equations.substitute_operators">
+<code class="descclassname">datavalidation.validation.equations.</code><code class="descname">substitute_operators</code><span class="sig-paren">(</span><em>equation</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datavalidation/validation/equations.html#substitute_operators"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datavalidation.validation.equations.substitute_operators" title="Permalink to this definition">¶</a></dt>
+<dd><p>Substitutes the operators in an equation (e.g. TAN for sympy.tan).
+It accepts both an equation as a string or a list of equation strings.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>equation</strong> – equation as a string or a list</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">equation as a string or a list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="datavalidation.validation.equations.substitute_parameters">
+<code class="descclassname">datavalidation.validation.equations.</code><code class="descname">substitute_parameters</code><span class="sig-paren">(</span><em>equation</em>, <em>parameter_list: list</em>, <em>symbol_to_solve: str</em>, <em>bike_geometry: datavalidation.core.bikegeometry.BikeGeometry</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datavalidation/validation/equations.html#substitute_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datavalidation.validation.equations.substitute_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Substitutes the GeometryParameters of an equation using the values from the BikeGeometry. In other words,
+it substitutes the variables like {bb_drop} by their actual numeric value in the equation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>equation</strong> – equation as a string or a list</li>
+<li><strong>parameter_list</strong> – list of parameters of the equation</li>
+<li><strong>symbol_to_solve</strong> – GeometryParameter name to solve the equation for (aka the X)</li>
+<li><strong>bike_geometry</strong> – the BikeGeometry</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">equation as a string or a list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="module-datavalidation.validation.formulae">
+<span id="validation-formulae-module"></span><h2>validation.formulae module<a class="headerlink" href="#module-datavalidation.validation.formulae" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id1">
+<h3>equations<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>File containing different formulae and equations to validate bike geometries.</p>
+<p>Author: Javier Chiyah, Heriot-Watt University, 2019</p>
+</div>
+</div>
+<div class="section" id="module-datavalidation.validation.validate">
+<span id="validation-validate-module"></span><h2>validation.validate module<a class="headerlink" href="#module-datavalidation.validation.validate" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="validate">
+<h3>validate<a class="headerlink" href="#validate" title="Permalink to this headline">¶</a></h3>
+<p>Module with the main functionality of the validation process. It validates BikeGeometries and GeometryParameters, and
+calculates the GeometryParameters missing if possible.</p>
+<p>Author: Javier Chiyah, Heriot-Watt University, 2019</p>
+<dl class="function">
+<dt id="datavalidation.validation.validate.calculate_missing_parameters">
+<code class="descclassname">datavalidation.validation.validate.</code><code class="descname">calculate_missing_parameters</code><span class="sig-paren">(</span><em>bike_geometry: datavalidation.core.bikegeometry.BikeGeometry</em>, <em>include_invalid: bool = True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datavalidation/validation/validate.html#calculate_missing_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datavalidation.validation.validate.calculate_missing_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates missing GeometryParameters of a BikeGeometry if possible. It modifies the BikeGeometry in place!</p>
+<p>Missing parameters are defined in the function BikeGeometry.get_missing_parameter_list().
+It also includes invalid parameters, from the function get_invalid_parameters().</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>bike_geometry</strong> – the BikeGeometry</li>
+<li><strong>include_invalid</strong> – if it should calculate invalid parameters too, default is True</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="datavalidation.validation.validate.calculate_parameter">
+<code class="descclassname">datavalidation.validation.validate.</code><code class="descname">calculate_parameter</code><span class="sig-paren">(</span><em>parameter_name: str</em>, <em>bike_geometry: datavalidation.core.bikegeometry.BikeGeometry</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datavalidation/validation/validate.html#calculate_parameter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datavalidation.validation.validate.calculate_parameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the value of a parameter and sets it confidence value if it can derived from the geometry statistics.
+It modifies the GeometryParameter given in the BikeGeometry (or creates one if it does not exists).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>parameter_name</strong> – name of the GeometryParameter</li>
+<li><strong>bike_geometry</strong> – the BikeGeometry</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="datavalidation.validation.validate.get_invalid_parameters">
+<code class="descclassname">datavalidation.validation.validate.</code><code class="descname">get_invalid_parameters</code><span class="sig-paren">(</span><em>bike_geometry: datavalidation.core.bikegeometry.BikeGeometry</em><span class="sig-paren">)</span> &#x2192; list<a class="reference internal" href="../_modules/datavalidation/validation/validate.html#get_invalid_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datavalidation.validation.validate.get_invalid_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a list with the names of invalid GeometryParameters of a BikeGeometry that are numbers (that can be calculated).
+An invalid parameters is defined by the function is_parameter_invalid().</p>
+<p>Note: this function should be inside BikeGeometry, but is_parameter_invalid() uses the geometry constraints, thus
+it is best to keep the core of the datavalidation module (BikeGeometry) separated from the constraints module.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>bike_geometry</strong> – the BikeGeometry</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">list of invalid parameters (list of str)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="datavalidation.validation.validate.get_value_similarity">
+<code class="descclassname">datavalidation.validation.validate.</code><code class="descname">get_value_similarity</code><span class="sig-paren">(</span><em>value1</em>, <em>value2</em><span class="sig-paren">)</span> &#x2192; float<a class="reference internal" href="../_modules/datavalidation/validation/validate.html#get_value_similarity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datavalidation.validation.validate.get_value_similarity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the similarity between two values.
+The similarity is a number between 0 and 1 as a percentage where 1 means that the values are the same and 0
+means that the values are completely different.
+This function is duplicated in the constraints module. A common utility file could improve this…</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>value1</strong> – value</li>
+<li><strong>value2</strong> – value</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">(0 to 1) percentage float of how close value1 is to value2</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="datavalidation.validation.validate.is_parameter_invalid">
+<code class="descclassname">datavalidation.validation.validate.</code><code class="descname">is_parameter_invalid</code><span class="sig-paren">(</span><em>parameter: datavalidation.core.geometryparameter.GeometryParameter</em>, <em>bike_geometry: datavalidation.core.bikegeometry.BikeGeometry</em><span class="sig-paren">)</span> &#x2192; bool<a class="reference internal" href="../_modules/datavalidation/validation/validate.html#is_parameter_invalid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datavalidation.validation.validate.is_parameter_invalid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if a GeometryParameter is invalid.</p>
+<p>A GeometryParameter is invalid if:</p>
+<ul class="simple">
+<li>The parameter has very low confidence.</li>
+<li>The parameter does not satisfy geometry constraints.</li>
+<li>The parameter is too deviated from normal constraints.</li>
+</ul>
+<p>Note: this function should be inside BikeGeometry, but it uses the geometry constraints, thus
+it is best to keep the core of the datavalidation module (BikeGeometry) separated from the constraints module.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>parameter</strong> – GeometryParameter to check</li>
+<li><strong>bike_geometry</strong> – BikeGeometry to make the comparison</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">bool, True if the parameter IS invalid</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="datavalidation.validation.validate.validate_bike_geometry">
+<code class="descclassname">datavalidation.validation.validate.</code><code class="descname">validate_bike_geometry</code><span class="sig-paren">(</span><em>bike_geometry: datavalidation.core.bikegeometry.BikeGeometry</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datavalidation/validation/validate.html#validate_bike_geometry"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datavalidation.validation.validate.validate_bike_geometry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validates a BikeGeometry. Be careful as it modifies the BikeGeometry in place!</p>
+<p>After calling this function, the BikeGeometry has been modified in the following way:</p>
+<ul class="simple">
+<li>The GeometryParameters from inside the BikeGeometry that could be validated now have confidence values.</li>
+<li>Some GeometryParameters may be deemed invalid due to low confidence values.</li>
+<li>Some GeometryParameters may have new calculated values, even if the previous values were valid.</li>
+<li>Some GeometryParameters without a value may have a new value calculated by deriving it from others.</li>
+<li>The BikeGeometry can now be queried for a confidence value (get_confidence_score()).</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>bike_geometry</strong> – BikeGeometry object to validate</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="datavalidation.validation.validate.validate_geometry_parameter">
+<code class="descclassname">datavalidation.validation.validate.</code><code class="descname">validate_geometry_parameter</code><span class="sig-paren">(</span><em>parameter: datavalidation.core.geometryparameter.GeometryParameter</em>, <em>bike_geometry: datavalidation.core.bikegeometry.BikeGeometry</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datavalidation/validation/validate.html#validate_geometry_parameter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datavalidation.validation.validate.validate_geometry_parameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validates a GeometryParameter of the BikeGeometry. It modifies the GeometryParameter but not the BikeGeometry.</p>
+<p>After calling this function in a GeometryParameter, it will:</p>
+<ul class="simple">
+<li>Have a confidence value if we were able to validate it.</li>
+<li>Have a new calculated value if we were able to validate it.</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>parameter</strong> – GeometryParameter inside the BikeGeometry</li>
+<li><strong>bike_geometry</strong> – the BikeGeometry</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="datavalidation.normalisation.html" class="btn btn-neutral float-left" title="normalisation package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Javier Chiyah Garcia
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+	"logging": {
+		"console": false,
+		"level": "logging.INFO",
+		"filename": "datavalidation.log",
+		"filemode": "a",
+		"format": "%(asctime)s [%(levelname)s]: %(message)s"
+	},
+	"logging_test": {
+		"console": false,
+		"level": "logging.DEBUG",
+		"filename": "datavalidation_test.log",
+		"filemode": "w",
+		"format": "%(asctime)s [%(levelname)s]: %(message)s"
+	}
+}

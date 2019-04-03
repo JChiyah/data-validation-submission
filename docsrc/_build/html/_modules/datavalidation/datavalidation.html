@@ -1,0 +1,341 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>datavalidation.datavalidation &mdash; Data Validation 1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Data Validation
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">Data Validation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../history.html">History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../implementation.html">Implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../source/modules.html">Documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Data Validation</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>datavalidation.datavalidation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for datavalidation.datavalidation</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">datavalidation</span>
+<span class="sd">----------------------------------</span>
+
+<span class="sd">Main module of the datavalidation package. It contains functions to validate bike geometries.</span>
+
+<span class="sd">Author: Javier Chiyah and Mario Vasilev, Heriot-Watt University, 2019</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="c1"># from .core import BikeGeometry, set_up_logging</span>
+<span class="kn">import</span> <span class="nn">datavalidation.core</span> <span class="k">as</span> <span class="nn">dvcore</span>
+<span class="kn">import</span> <span class="nn">datavalidation.core.config</span> <span class="k">as</span> <span class="nn">dvconfig</span>
+<span class="kn">import</span> <span class="nn">datavalidation.validation</span> <span class="k">as</span> <span class="nn">validation</span>
+<span class="kn">import</span> <span class="nn">datavalidation.normalisation</span> <span class="k">as</span> <span class="nn">normalisation</span>
+
+
+<span class="c1"># set up the logger of the whole package with the config file</span>
+<span class="n">dvconfig</span><span class="o">.</span><span class="n">set_up_logging</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="request_validate_bike_geometry"><a class="viewcode-back" href="../../source/datavalidation.html#datavalidation.datavalidation.request_validate_bike_geometry">[docs]</a><span class="k">def</span> <span class="nf">request_validate_bike_geometry</span><span class="p">(</span><span class="n">request_content</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	Request to validate a bike geometry.</span>
+
+<span class="sd">	Example request::</span>
+
+<span class="sd">		{</span>
+<span class="sd">			&quot;geometries&quot;: [</span>
+<span class="sd">				{</span>
+<span class="sd">					&quot;geometry_threshold&quot;: 0.7,</span>
+<span class="sd">					&quot;parameter_threshold&quot;: 0.7,</span>
+<span class="sd">					&quot;parameter_list&quot;: [</span>
+<span class="sd">						{</span>
+<span class="sd">							&quot;p&quot;: &quot;reach&quot;,</span>
+<span class="sd">							&quot;v&quot;: &quot;371&quot;,</span>
+<span class="sd">							&quot;id&quot;: &quot;**any-value**&quot;</span>
+<span class="sd">						},</span>
+<span class="sd">						{</span>
+<span class="sd">							&quot;p&quot;: &quot;stack&quot;,</span>
+<span class="sd">							&quot;v&quot;: &quot;533&quot;,</span>
+<span class="sd">							&quot;id&quot;: &quot;**any-value**&quot;</span>
+<span class="sd">						}</span>
+<span class="sd">					]</span>
+<span class="sd">				}</span>
+<span class="sd">			]</span>
+<span class="sd">			# more parameters of the request ...</span>
+<span class="sd">		}</span>
+
+<span class="sd">	Check the `usage` document for more information.</span>
+
+<span class="sd">	:param request_content: content of the request as a dict</span>
+<span class="sd">	:return: request response as a dict</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Received validate_bike_geometry request&quot;</span><span class="p">)</span>
+
+	<span class="n">request_content</span><span class="p">[</span><span class="s1">&#39;geometries&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">validate_bike_geometry_list</span><span class="p">(</span><span class="n">request_content</span><span class="p">[</span><span class="s1">&#39;geometries&#39;</span><span class="p">])</span>
+
+	<span class="c1"># return correctly formatted request</span>
+	<span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Responding to validate_bike_geometry request&quot;</span><span class="p">)</span>
+	<span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Response: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">request_content</span><span class="p">))</span>
+
+	<span class="k">return</span> <span class="n">request_content</span></div>
+
+
+<div class="viewcode-block" id="validate_bike_geometry_list"><a class="viewcode-back" href="../../source/datavalidation.html#datavalidation.datavalidation.validate_bike_geometry_list">[docs]</a><span class="k">def</span> <span class="nf">validate_bike_geometry_list</span><span class="p">(</span><span class="n">bike_geometry_list</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	Validates a list of bike geometries.</span>
+
+<span class="sd">	Example list::</span>
+
+<span class="sd">		[</span>
+<span class="sd">			# bike geometry</span>
+<span class="sd">			{</span>
+<span class="sd">				&quot;parameter_list&quot;: [</span>
+<span class="sd">					{</span>
+<span class="sd">						&quot;p&quot;: &quot;reach&quot;,</span>
+<span class="sd">						&quot;v&quot;: &quot;371&quot;</span>
+<span class="sd">					},</span>
+<span class="sd">					{</span>
+<span class="sd">						&quot;p&quot;: &quot;stack&quot;,</span>
+<span class="sd">						&quot;v&quot;: &quot;533&quot;</span>
+<span class="sd">					}</span>
+<span class="sd">				]</span>
+<span class="sd">			},</span>
+<span class="sd">			# more geometries ...</span>
+<span class="sd">		]</span>
+
+<span class="sd">	:param bike_geometry_list: list of bike geometry dicts</span>
+<span class="sd">	:return: list of bike geometry dicts validated</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="n">validated_geometry_list</span> <span class="o">=</span> <span class="p">[]</span>
+	<span class="c1"># for each bike geometry, normalise it and validate</span>
+	<span class="k">for</span> <span class="n">geometry</span> <span class="ow">in</span> <span class="n">bike_geometry_list</span><span class="p">:</span>
+		<span class="n">validated_geometry</span> <span class="o">=</span> <span class="n">validate_bike_geometry</span><span class="p">(</span><span class="n">geometry</span><span class="p">)</span>
+
+		<span class="c1"># add it to list in dict format</span>
+		<span class="n">validated_geometry_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">validated_geometry</span><span class="p">)</span>
+
+	<span class="k">return</span> <span class="n">validated_geometry_list</span></div>
+
+
+<div class="viewcode-block" id="validate_bike_geometry"><a class="viewcode-back" href="../../source/datavalidation.html#datavalidation.datavalidation.validate_bike_geometry">[docs]</a><span class="k">def</span> <span class="nf">validate_bike_geometry</span><span class="p">(</span><span class="n">bike_geometry_dict</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	Validates a bike geometry given a dictionary representing one.</span>
+
+<span class="sd">	Example bike geometry dict::</span>
+
+<span class="sd">		{</span>
+<span class="sd">			&quot;parameter_list&quot;: [</span>
+<span class="sd">				{</span>
+<span class="sd">					&quot;p&quot;: &quot;reach&quot;,</span>
+<span class="sd">					&quot;v&quot;: &quot;371&quot;</span>
+<span class="sd">				},</span>
+<span class="sd">				{</span>
+<span class="sd">					&quot;p&quot;: &quot;stack&quot;,</span>
+<span class="sd">					&quot;v&quot;: &quot;533&quot;</span>
+<span class="sd">				},</span>
+<span class="sd">				# more bike geometry parameters ...</span>
+<span class="sd">			]</span>
+<span class="sd">		}</span>
+
+<span class="sd">	:param bike_geometry_dict: bike geometry dict</span>
+<span class="sd">	:return: bike geometry dict</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="n">bike_geometry</span> <span class="o">=</span> <span class="n">dvcore</span><span class="o">.</span><span class="n">BikeGeometry</span><span class="p">(</span><span class="n">bike_geometry_dict</span><span class="p">)</span>
+
+	<span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Bike geometry dump: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">bike_geometry</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()))</span>
+
+	<span class="n">normalisation</span><span class="o">.</span><span class="n">normalise_bike_geometry</span><span class="p">(</span><span class="n">bike_geometry</span><span class="p">)</span>
+
+	<span class="n">validation</span><span class="o">.</span><span class="n">validate_bike_geometry</span><span class="p">(</span><span class="n">bike_geometry</span><span class="p">)</span>
+
+	<span class="c1"># return correctly formatted request</span>
+	<span class="n">bike_dict</span> <span class="o">=</span> <span class="n">bike_geometry</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+	<span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Validated bike geometry dump: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">bike_dict</span><span class="p">))</span>
+
+	<span class="k">return</span> <span class="n">bike_dict</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Javier Chiyah Garcia
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,540 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Usage &mdash; Data Validation 1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Credits" href="authors.html" />
+    <link rel="prev" title="Installation" href="installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Data Validation
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="readme.html">Data Validation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#example-bike-request">Example Bike Request</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example-response">Example Response</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="implementation.html">Implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source/modules.html">Documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Data Validation</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Usage</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/usage.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="usage">
+<h1>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h1>
+<p>To use Data Validation in a project:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datavalidation.datavalidation</span> <span class="k">as</span> <span class="nn">dv</span>
+
+<span class="n">request</span> <span class="o">=</span> <span class="p">{</span> <span class="o">...</span> <span class="p">}</span> <span class="c1"># your bike request, possibly from a HTTP request, see below</span>
+
+<span class="n">validated_bike_response</span> <span class="o">=</span> <span class="n">dv</span><span class="o">.</span><span class="n">request_validate_bike_geometry</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+
+<span class="c1"># OR to validate multiple geometries without request</span>
+
+<span class="n">bike_geometry_list</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span> <span class="o">...</span> <span class="p">}</span> <span class="c1"># bike geometry</span>
+<span class="p">]</span>
+
+<span class="n">validated_bike_geometry_list</span> <span class="o">=</span> <span class="n">dv</span><span class="o">.</span><span class="n">validate_bike_geometry_list</span><span class="p">(</span><span class="n">bike_geometry_list</span><span class="p">)</span>
+
+<span class="c1"># OR to validate only one geometry</span>
+
+<span class="n">single_bike_geometry</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;parameter_list&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="s2">&quot;wheelbase&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="s2">&quot;1024&quot;</span>
+        <span class="p">}</span>
+        <span class="c1"># ... more parameters as needed</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+
+<span class="n">validated_bike_geometry</span> <span class="o">=</span> <span class="n">dv</span><span class="o">.</span><span class="n">validate_bike_geometry</span><span class="p">(</span><span class="n">single_bike_geometry</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="example-bike-request">
+<h2>Example Bike Request<a class="headerlink" href="#example-bike-request" title="Permalink to this headline">¶</a></h2>
+<p>A request to validate bike geometries can have multiple bike geometries at the same time and these bike geometries do not need to have all the parameters in them.</p>
+<p>An example valid request would look like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># valid bike request</span>
+<span class="p">{</span>
+    <span class="s2">&quot;geometries&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;geometry_threshold&quot;</span><span class="p">:</span> <span class="mf">0.7</span><span class="p">,</span>
+            <span class="s2">&quot;parameter_threshold&quot;</span><span class="p">:</span> <span class="mf">0.7</span><span class="p">,</span>
+            <span class="s2">&quot;parameter_list&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="s2">&quot;reach&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="s2">&quot;371&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;**any-value**&quot;</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="s2">&quot;stack&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="s2">&quot;533&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;**any-value**&quot;</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="s2">&quot;top_tube&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="s2">&quot;21.02 / 534&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;**any-value**&quot;</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="s2">&quot;seat_tube_length&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;**any-value**&quot;</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="s2">&quot;seat_tube_length_cc&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;**any-value**&quot;</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="s2">&quot;seat_tube_length_eff&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;**any-value**&quot;</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="s2">&quot;head_angle&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="s2">&quot;71&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;**any-value**&quot;</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="s2">&quot;seat_angle&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="s2">&quot;73&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;**any-value**&quot;</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="s2">&quot;head_tube&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="s2">&quot;107&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;**any-value**&quot;</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="s2">&quot;chainstay&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="s2">&quot;430&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;**any-value**&quot;</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="s2">&quot;wheelbase&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="s2">&quot;1014&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;**any-value**&quot;</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="s2">&quot;front_centre&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;**any-value**&quot;</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="s2">&quot;bb_drop&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="s2">&quot;57.5&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;**any-value**&quot;</span>
+                <span class="p">}</span>
+            <span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="example-response">
+<h2>Example Response<a class="headerlink" href="#example-response" title="Permalink to this headline">¶</a></h2>
+<p>An example response of validated bike geometries would look like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;geometries&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;geometry_threshold&quot;</span><span class="p">:</span> <span class="mf">0.7</span><span class="p">,</span>
+            <span class="s2">&quot;parameter_threshold&quot;</span><span class="p">:</span> <span class="mf">0.7</span><span class="p">,</span>
+            <span class="s2">&quot;optimistic_validation&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s2">&quot;count_calculated_params&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s2">&quot;confidence&quot;</span><span class="p">:</span> <span class="mf">0.5999918164974749</span><span class="p">,</span>
+            <span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="s2">&quot;validated_parameters&quot;</span><span class="p">:</span> <span class="mi">9</span><span class="p">,</span>
+            <span class="s2">&quot;validatable_parameters&quot;</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span>
+            <span class="s2">&quot;parameter_list&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="s2">&quot;axle_spacing&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;original_v&quot;</span><span class="p">:</span> <span class="kc">None</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="s2">&quot;bb_drop&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;**any-value**&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="s2">&quot;57.5&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;original_v&quot;</span><span class="p">:</span> <span class="s2">&quot;57.5&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;calculated_v&quot;</span><span class="p">:</span> <span class="s2">&quot;57.49999999999998&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;confidence&quot;</span><span class="p">:</span> <span class="mf">0.9999999999999997</span><span class="p">,</span>
+                    <span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="kc">False</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="s2">&quot;bb_height&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;original_v&quot;</span><span class="p">:</span> <span class="kc">None</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="s2">&quot;chainstay&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;**any-value**&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="s2">&quot;430&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;calculated_v&quot;</span><span class="p">:</span> <span class="s2">&quot;430&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;confidence&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+                    <span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="kc">False</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="s2">&quot;crank_length&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;original_v&quot;</span><span class="p">:</span> <span class="kc">None</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="s2">&quot;fork_length&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="s2">&quot;413.197384616416&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;original_v&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                    <span class="s2">&quot;calculated_v&quot;</span><span class="p">:</span> <span class="s2">&quot;413.197384616416&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;confidence&quot;</span><span class="p">:</span> <span class="mf">0.75</span><span class="p">,</span>
+                    <span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="kc">False</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="s2">&quot;fork_rake&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="s2">&quot;53.13403806646118&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;original_v&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                    <span class="s2">&quot;calculated_v&quot;</span><span class="p">:</span> <span class="s2">&quot;53.13403806646118&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;confidence&quot;</span><span class="p">:</span> <span class="mf">0.75</span><span class="p">,</span>
+                    <span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="kc">False</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="s2">&quot;front_centre&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;**any-value**&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="s2">&quot;590.6672221146129&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;original_v&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;calculated_v&quot;</span><span class="p">:</span> <span class="s2">&quot;590.6672221146129&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;confidence&quot;</span><span class="p">:</span> <span class="mf">0.75</span><span class="p">,</span>
+                    <span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="kc">False</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="s2">&quot;handlebar_drop&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;original_v&quot;</span><span class="p">:</span> <span class="kc">None</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="s2">&quot;handlebar_width&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;original_v&quot;</span><span class="p">:</span> <span class="kc">None</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="s2">&quot;head_angle&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;**any-value**&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="s2">&quot;71&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;original_v&quot;</span><span class="p">:</span> <span class="s2">&quot;71&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;calculated_v&quot;</span><span class="p">:</span> <span class="s2">&quot;70.9999999999999&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;confidence&quot;</span><span class="p">:</span> <span class="mf">0.9999999999999986</span><span class="p">,</span>
+                    <span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="kc">False</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="s2">&quot;head_tube&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;**any-value**&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="s2">&quot;107&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;original_v&quot;</span><span class="p">:</span> <span class="s2">&quot;107&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;calculated_v&quot;</span><span class="p">:</span> <span class="s2">&quot;107.00000000000028&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;confidence&quot;</span><span class="p">:</span> <span class="mf">0.9999999999999973</span><span class="p">,</span>
+                    <span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="kc">False</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="s2">&quot;reach&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;**any-value**&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="s2">&quot;371&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;original_v&quot;</span><span class="p">:</span> <span class="s2">&quot;371&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;calculated_v&quot;</span><span class="p">:</span> <span class="s2">&quot;371.045546782534&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;confidence&quot;</span><span class="p">:</span> <span class="mf">0.999877247462127</span><span class="p">,</span>
+                    <span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="kc">False</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="s2">&quot;saddle_height&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;original_v&quot;</span><span class="p">:</span> <span class="kc">None</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="s2">&quot;seat_angle&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;**any-value**&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="s2">&quot;73&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;calculated_v&quot;</span><span class="p">:</span> <span class="s2">&quot;73&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;confidence&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+                    <span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="kc">False</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="s2">&quot;seat_tube_length&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;**any-value**&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="s2">&quot;seat_tube_length_cc&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;**any-value**&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="s2">&quot;seat_tube_length_eff&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;**any-value**&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="s2">&quot;557.3537062076499&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;original_v&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;calculated_v&quot;</span><span class="p">:</span> <span class="s2">&quot;557.3537062076499&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;confidence&quot;</span><span class="p">:</span> <span class="mf">0.75</span><span class="p">,</span>
+                    <span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="kc">False</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="s2">&quot;seatpost_diameter&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;original_v&quot;</span><span class="p">:</span> <span class="kc">None</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="s2">&quot;seatpost_length&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;original_v&quot;</span><span class="p">:</span> <span class="kc">None</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="s2">&quot;stack&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;**any-value**&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="s2">&quot;533&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;original_v&quot;</span><span class="p">:</span> <span class="s2">&quot;533&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;calculated_v&quot;</span><span class="p">:</span> <span class="s2">&quot;533.0000000000001&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;confidence&quot;</span><span class="p">:</span> <span class="mf">0.9999999999999998</span><span class="p">,</span>
+                    <span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="kc">False</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="s2">&quot;standover&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;original_v&quot;</span><span class="p">:</span> <span class="kc">None</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="s2">&quot;stem_length&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;original_v&quot;</span><span class="p">:</span> <span class="kc">None</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="s2">&quot;top_tube&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;**any-value**&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="s2">&quot;534&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;original_v&quot;</span><span class="p">:</span> <span class="s2">&quot;21.02 / 534&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;calculated_v&quot;</span><span class="p">:</span> <span class="s2">&quot;534&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;confidence&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+                    <span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="kc">False</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="s2">&quot;top_tube_actual&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;original_v&quot;</span><span class="p">:</span> <span class="kc">None</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="s2">&quot;trail&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;original_v&quot;</span><span class="p">:</span> <span class="kc">None</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="s2">&quot;tyre_width&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;original_v&quot;</span><span class="p">:</span> <span class="kc">None</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="s2">&quot;wheelbase&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;**any-value**&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="s2">&quot;1014&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;calculated_v&quot;</span><span class="p">:</span> <span class="s2">&quot;1014&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;confidence&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+                    <span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="kc">False</span>
+                <span class="p">}</span>
+            <span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This response was filled with the additional parameters missing from the previous request.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="authors.html" class="btn btn-neutral float-right" title="Credits" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="installation.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Javier Chiyah Garcia
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

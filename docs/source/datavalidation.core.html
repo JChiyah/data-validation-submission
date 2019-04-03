@@ -1,0 +1,780 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>core package &mdash; Data Validation 1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="normalisation package" href="datavalidation.normalisation.html" />
+    <link rel="prev" title="datavalidation package" href="datavalidation.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Data Validation
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">Data Validation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../history.html">History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../implementation.html">Implementation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="modules.html#implementation">Implementation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#commands">Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#style">Style</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="modules.html#package">Package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="datavalidation.html">datavalidation package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="datavalidation.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="datavalidation.html#module-datavalidation.datavalidation">datavalidation module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Data Validation</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">Documentation</a> &raquo;</li>
+        
+          <li><a href="datavalidation.html">datavalidation package</a> &raquo;</li>
+        
+      <li>core package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/source/datavalidation.core.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="core-package">
+<h1>core package<a class="headerlink" href="#core-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-datavalidation.core.bikegeometry">
+<span id="core-bikegeometry-module"></span><h2>core.bikegeometry module<a class="headerlink" href="#module-datavalidation.core.bikegeometry" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="bikegeometry">
+<h3>BikeGeometry<a class="headerlink" href="#bikegeometry" title="Permalink to this headline">¶</a></h3>
+<p>Main object of the datavalidation package.
+It holds information about a bike geometry, including its parameters and certain config options.
+It also provides logic to work with bike geometries and to convert from/to JSON representation.</p>
+<p>Author: Javier Chiyah, Heriot-Watt University, 2019</p>
+<dl class="class">
+<dt id="datavalidation.core.bikegeometry.BikeGeometry">
+<em class="property">class </em><code class="descclassname">datavalidation.core.bikegeometry.</code><code class="descname">BikeGeometry</code><span class="sig-paren">(</span><em>json_dict: dict</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datavalidation/core/bikegeometry.html#BikeGeometry"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datavalidation.core.bikegeometry.BikeGeometry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A BikeGeometry can be initialised with a JSON-like dict with a list of parameters.</p>
+<p>If the dict given contains more elements than those needed by the BikeGeometry itself, it will save
+and output them when the BikeGeometry is converted back to a dict.
+For instance, giving a field “id” would return the same field with the values at the end.</p>
+<p>Example valid dict:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+        <span class="s2">&quot;parameter_list&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                        <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="s2">&quot;reach&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="s2">&quot;371&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;**any-value**&quot;</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                        <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="s2">&quot;stack&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="s2">&quot;533&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;**any-value**&quot;</span>
+                <span class="p">}</span>
+        <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>There is a &#64;classmethod available if you need to create a BikeGeometry from a dict of parameters instead.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>json_dict</strong> – dict with the bike geometry information</td>
+</tr>
+</tbody>
+</table>
+<dl class="classmethod">
+<dt id="datavalidation.core.bikegeometry.BikeGeometry.from_parameter_dict">
+<em class="property">classmethod </em><code class="descname">from_parameter_dict</code><span class="sig-paren">(</span><em>json_dict: dict</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datavalidation/core/bikegeometry.html#BikeGeometry.from_parameter_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datavalidation.core.bikegeometry.BikeGeometry.from_parameter_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a new BikeGeometry from a dictionary of parameters. This is used mostly in testing.
+Example dict:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+        <span class="s2">&quot;parameter1&quot;</span><span class="p">:</span> <span class="s2">&quot;value1&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;parameter2&quot;</span><span class="p">:</span> <span class="s2">&quot;value2&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>json_dict</strong> – dict of parameters</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">BikeGeometry</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datavalidation.core.bikegeometry.BikeGeometry.get_confidence_score">
+<code class="descname">get_confidence_score</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datavalidation/core/bikegeometry.html#BikeGeometry.get_confidence_score"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datavalidation.core.bikegeometry.BikeGeometry.get_confidence_score" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the confidence score of this BikeGeometry. It is None if no validation has been performed on this
+BikeGeometry.</p>
+<p>The confidence score is how confident we are that the parameters of this BikeGeometry fit together. The score is
+calculated only when this function is called, without updating parameters confidences when these change.
+Therefore, it is safe for parallel execution, but it is best not to call this function too often as it may
+take some time to calculate.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">float from 0 to 1, or None if no validation has been performed</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datavalidation.core.bikegeometry.BikeGeometry.get_missing_parameter_list">
+<code class="descname">get_missing_parameter_list</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; list<a class="reference internal" href="../_modules/datavalidation/core/bikegeometry.html#BikeGeometry.get_missing_parameter_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datavalidation.core.bikegeometry.BikeGeometry.get_missing_parameter_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a list of all the parameters that are missing (e.g. None value, “” value, etc).
+It only returns those parameters that can be calculated based on constants.VALIDATABLE_PARAMETERS_LIST</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">list of parameter names (list of str)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datavalidation.core.bikegeometry.BikeGeometry.get_parameter">
+<code class="descname">get_parameter</code><span class="sig-paren">(</span><em>parameter_name: str</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datavalidation/core/bikegeometry.html#BikeGeometry.get_parameter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datavalidation.core.bikegeometry.BikeGeometry.get_parameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a GeometryParameter of this BikeGeometry.
+It returns None if the parameter has not been initialised or does not exists.</p>
+<p>Example usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span> <span class="n">bike</span><span class="o">.</span><span class="n">get_parameter</span><span class="p">(</span><span class="s2">&quot;slug&quot;</span><span class="p">)</span>
+<span class="n">GeometryParameter</span><span class="p">()</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parameter_name</strong> – name of the parameter</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">GeometryParameter or None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datavalidation.core.bikegeometry.BikeGeometry.get_parameter_list">
+<code class="descname">get_parameter_list</code><span class="sig-paren">(</span><em>filter_empty: bool = True</em><span class="sig-paren">)</span> &#x2192; list<a class="reference internal" href="../_modules/datavalidation/core/bikegeometry.html#BikeGeometry.get_parameter_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datavalidation.core.bikegeometry.BikeGeometry.get_parameter_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a list with all the parameters from the BikeGeometry. It filters empty/invalid parameters by default.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filter_empty</strong> – whether to filter empty parameters (those that are None or their value is empty), True by default</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">list of GeometryParameter</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datavalidation.core.bikegeometry.BikeGeometry.get_parameter_value">
+<code class="descname">get_parameter_value</code><span class="sig-paren">(</span><em>parameter_name: str</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datavalidation/core/bikegeometry.html#BikeGeometry.get_parameter_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datavalidation.core.bikegeometry.BikeGeometry.get_parameter_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the value of a GeometryParameter of this BikeGeometry.
+It returns None if the parameter is missing, does not exists or if its value is None.</p>
+<p>Example usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span> <span class="n">bike</span><span class="o">.</span><span class="n">get_parameter_value</span><span class="p">(</span><span class="s2">&quot;slug&quot;</span><span class="p">)</span>
+<span class="s2">&quot;bike_slug_name&quot;</span>
+<span class="c1"># this is also equivalent</span>
+<span class="o">&gt;&gt;</span> <span class="n">bike</span><span class="o">.</span><span class="n">get_parameter</span><span class="p">(</span><span class="s2">&quot;slug&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
+<span class="s2">&quot;bike_slug_name&quot;</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parameter_name</strong> – name of the parameter</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the value of the parameter, which can be str, int, float (or None if it does not exists)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datavalidation.core.bikegeometry.BikeGeometry.set_parameter">
+<code class="descname">set_parameter</code><span class="sig-paren">(</span><em>parameter: datavalidation.core.geometryparameter.GeometryParameter</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datavalidation/core/bikegeometry.html#BikeGeometry.set_parameter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datavalidation.core.bikegeometry.BikeGeometry.set_parameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets a parameter of the BikeGeometry. This is used to set the parameters of the BikeGeometry when they
+were missing from the initialisation dict.
+Note that it substitutes the value, overriding whatever was before!</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parameter</strong> – GeometryParameter</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datavalidation.core.bikegeometry.BikeGeometry.to_dict">
+<code class="descname">to_dict</code><span class="sig-paren">(</span><em>string_values=True</em><span class="sig-paren">)</span> &#x2192; dict<a class="reference internal" href="../_modules/datavalidation/core/bikegeometry.html#BikeGeometry.to_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datavalidation.core.bikegeometry.BikeGeometry.to_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the value as a dict type so it can be serialised in a JSON response.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>string_values</strong> – whether to return the values in string format or not. Default is True, so everything is
+returned as string</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dict object similar to that given in the __init__ function</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="module-datavalidation.core.config">
+<span id="core-config-module"></span><h2>core.config module<a class="headerlink" href="#module-datavalidation.core.config" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="config">
+<h3>config<a class="headerlink" href="#config" title="Permalink to this headline">¶</a></h3>
+<p>Module with several utility functions to configure certain parts of the package and read the config file.</p>
+<p>The config file is located under the package’s root, in <cite>datavalidation.config</cite>.</p>
+<p>Author: Javier Chiyah, Heriot-Watt University, 2019</p>
+<dl class="function">
+<dt id="datavalidation.core.config.read_config_file">
+<code class="descclassname">datavalidation.core.config.</code><code class="descname">read_config_file</code><span class="sig-paren">(</span><em>filepath: str = 'config.json'</em><span class="sig-paren">)</span> &#x2192; dict<a class="reference internal" href="../_modules/datavalidation/core/config.html#read_config_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datavalidation.core.config.read_config_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads the config file and returns a dict with the package config. The config file is by default under the root
+of the package “<cite>datavalidation.config.json</cite>”.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filepath</strong> – path to the config file, default is the root of the package</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">config dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="datavalidation.core.config.set_up_logging">
+<code class="descclassname">datavalidation.core.config.</code><code class="descname">set_up_logging</code><span class="sig-paren">(</span><em>filepath: str = 'config.json'</em>, <em>use_test_config: bool = False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datavalidation/core/config.html#set_up_logging"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datavalidation.core.config.set_up_logging" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets up the app-wide logger using the settings retrieved from the configuration file.</p>
+<p>Note that the <cite>console</cite> option was not implemented in the end.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>filepath</strong> – path to a custom config file, default is the package config.json file</li>
+<li><strong>use_test_config</strong> – True to use the test configuration of the logger, default is False</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="module-datavalidation.core.constants">
+<span id="core-constants-module"></span><h2>core.constants module<a class="headerlink" href="#module-datavalidation.core.constants" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="constants">
+<h3>constants<a class="headerlink" href="#constants" title="Permalink to this headline">¶</a></h3>
+<p>Module containing different package-wide constants</p>
+<p>Author: Javier Chiyah, Heriot-Watt University, 2019</p>
+</div>
+</div>
+<div class="section" id="module-datavalidation.core.geometryparameter">
+<span id="core-geometryparameter-module"></span><h2>core.geometryparameter module<a class="headerlink" href="#module-datavalidation.core.geometryparameter" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="geometryparameter">
+<h3>GeometryParameter<a class="headerlink" href="#geometryparameter" title="Permalink to this headline">¶</a></h3>
+<p>Object that holds information about a parameter of a BikeGeometry. It contains several utility functions
+to retrieve the parameter value, its confidence, calculated value, etc.</p>
+<p>It also provides logic to convert from/to JSON representation.</p>
+<p>Author: Javier Chiyah, Heriot-Watt University, 2019</p>
+<dl class="class">
+<dt id="datavalidation.core.geometryparameter.GeometryParameter">
+<em class="property">class </em><code class="descclassname">datavalidation.core.geometryparameter.</code><code class="descname">GeometryParameter</code><span class="sig-paren">(</span><em>name: str</em>, <em>value</em>, <em>extra_values: dict = None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datavalidation/core/geometryparameter.html#GeometryParameter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datavalidation.core.geometryparameter.GeometryParameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A GeometryParameter can be initialised with its name and value. The value can be None if it is used as a
+placeholder for a future value.</p>
+<p>Example initialisation:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span> <span class="n">GeometryParamter</span><span class="p">(</span><span class="s2">&quot;head_angle&quot;</span><span class="p">,</span> <span class="mi">73</span><span class="p">)</span>
+<span class="n">GeometryParameter</span><span class="p">()</span> <span class="nb">object</span>
+<span class="c1"># or</span>
+<span class="o">&gt;&gt;</span> <span class="n">GeometryParamter</span><span class="p">(</span><span class="s2">&quot;head_angle&quot;</span><span class="p">,</span> <span class="s2">&quot;73&quot;</span><span class="p">)</span> <span class="c1"># here &quot;73&quot; is casted to float without having to normalise</span>
+<span class="n">GeometryParameter</span><span class="p">()</span> <span class="nb">object</span>
+<span class="c1"># or</span>
+<span class="o">&gt;&gt;</span> <span class="n">GeometryParamter</span><span class="p">(</span><span class="s2">&quot;head_angle&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<span class="n">GeometryParameter</span><span class="p">()</span> <span class="nb">object</span>
+</pre></div>
+</div>
+<p>Normalising or validating the parameter changes the object in place and expand the available functionality with
+additional class member variables such as calculated_value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> – name of the parameter</li>
+<li><strong>value</strong> – value of the parameter, either as string or the correct value</li>
+<li><strong>extra_values</strong> – if there is anything else to store in the parameter, but not used (e.g. “id” field)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="datavalidation.core.geometryparameter.GeometryParameter.calculated_value">
+<code class="descname">calculated_value</code><a class="headerlink" href="#datavalidation.core.geometryparameter.GeometryParameter.calculated_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the calculated value of the parameter if one exists.
+It will return the value in the correct type (e.g. integers will return as int).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">[int|float|str] value or None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="datavalidation.core.geometryparameter.GeometryParameter.confidence">
+<code class="descname">confidence</code><a class="headerlink" href="#datavalidation.core.geometryparameter.GeometryParameter.confidence" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the confidence score of the GeometryParameter.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">float confidence score</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="datavalidation.core.geometryparameter.GeometryParameter.from_dict">
+<em class="property">classmethod </em><code class="descname">from_dict</code><span class="sig-paren">(</span><em>json_dict: dict</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datavalidation/core/geometryparameter.html#GeometryParameter.from_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datavalidation.core.geometryparameter.GeometryParameter.from_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a new GeometryParameter from a dictionary.</p>
+<p>Example dict:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+        <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="s2">&quot;parameter_name&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="s2">&quot;parameter_value&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;optional additional field&quot;</span><span class="p">,</span>
+        <span class="o">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>json_dict</strong> – dict of the parameter (aka JSON)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">GeometryParameter</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datavalidation.core.geometryparameter.GeometryParameter.is_number">
+<code class="descname">is_number</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; bool<a class="reference internal" href="../_modules/datavalidation/core/geometryparameter.html#GeometryParameter.is_number"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datavalidation.core.geometryparameter.GeometryParameter.is_number" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if the GeometryParameter is a number type (float or int, but not a string or unknown).
+It is used to check if the GeometryParameter needs to be normalised or validated.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">bool, True if the GeometryParameter is a float or an int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="datavalidation.core.geometryparameter.GeometryParameter.name">
+<code class="descname">name</code><a class="headerlink" href="#datavalidation.core.geometryparameter.GeometryParameter.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the name of the parameter.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">string name</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="datavalidation.core.geometryparameter.GeometryParameter.normalised_value">
+<code class="descname">normalised_value</code><a class="headerlink" href="#datavalidation.core.geometryparameter.GeometryParameter.normalised_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the normalised value of the parameter, without taking the calculated value into account.
+It will return the value in the correct type (e.g. integers will return as int).</p>
+<p>If the GeometryParameter has not been normalised, it will return the original parameter instead.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">[int|float|str] value</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="datavalidation.core.geometryparameter.GeometryParameter.original_value">
+<code class="descname">original_value</code><a class="headerlink" href="#datavalidation.core.geometryparameter.GeometryParameter.original_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the original value of the GeometryParameter as a string, regardless of its true type.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">string value</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datavalidation.core.geometryparameter.GeometryParameter.set_calculated_value">
+<code class="descname">set_calculated_value</code><span class="sig-paren">(</span><em>new_value</em>, <em>change_confidence: bool = True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datavalidation/core/geometryparameter.html#GeometryParameter.set_calculated_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datavalidation.core.geometryparameter.GeometryParameter.set_calculated_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the calculated value of the GeometryParameter.</p>
+<p>It will raise an exception if the new value is not a valid type.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>new_value</strong> – calculated value</li>
+<li><strong>change_confidence</strong> – if True, it will change confidence, default is False</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">None</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><strong>ValueError</strong> – raised if the new value cannot be casted into the correct type</li>
+<li><strong>TypeError</strong> – raised if the new value is None or the empty string</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datavalidation.core.geometryparameter.GeometryParameter.set_confidence">
+<code class="descname">set_confidence</code><span class="sig-paren">(</span><em>confidence: float</em>, <em>force: bool = False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datavalidation/core/geometryparameter.html#GeometryParameter.set_confidence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datavalidation.core.geometryparameter.GeometryParameter.set_confidence" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the confidence score of the GeometryParameter.
+Note that it will average the current confidence value with the one given to smooth differences in precision of
+the equations. It also rounds the confidence to be within the range of 0 to 1 (inclusive)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>confidence</strong> – new confidence value</li>
+<li><strong>force</strong> – if True, it will force the confidence change. Otherwise, it chooses the highest (default is False)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datavalidation.core.geometryparameter.GeometryParameter.set_normalised_value">
+<code class="descname">set_normalised_value</code><span class="sig-paren">(</span><em>new_value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datavalidation/core/geometryparameter.html#GeometryParameter.set_normalised_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datavalidation.core.geometryparameter.GeometryParameter.set_normalised_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the value of the GeometryParameter after normalising its value.</p>
+<p>It will raise an exception if the new value is not a valid type.</p>
+<p>It gets the new value (e.g., a str) and casts it to the correct type (e.g., float) to make sure it does not
+violate any constraints of normalised parameters.
+It can also accept a list, which means a range of values (e.g., [190, 170]).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>new_value</strong> – normalised value</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">None</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><strong>ValueError</strong> – raised if the new value cannot be casted into the correct type</li>
+<li><strong>TypeError</strong> – raised if the new value is None or the empty string</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datavalidation.core.geometryparameter.GeometryParameter.to_dict">
+<code class="descname">to_dict</code><span class="sig-paren">(</span><em>string_values: bool = True</em><span class="sig-paren">)</span> &#x2192; dict<a class="reference internal" href="../_modules/datavalidation/core/geometryparameter.html#GeometryParameter.to_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datavalidation.core.geometryparameter.GeometryParameter.to_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the GeometryParameter as a dictionary ready to be serialised into a JSON response. It packs all the
+information currently contained in the GeometryParameter.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>string_values</strong> – whether to return the values in string format or not, default is True</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="datavalidation.core.geometryparameter.GeometryParameter.type">
+<code class="descname">type</code><a class="headerlink" href="#datavalidation.core.geometryparameter.GeometryParameter.type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the type of the GeometryParameter.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">type</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="datavalidation.core.geometryparameter.GeometryParameter.value">
+<code class="descname">value</code><a class="headerlink" href="#datavalidation.core.geometryparameter.GeometryParameter.value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the most up to date value of the parameter (it can be the normalised value, the calculated value or
+the original value if none of those is available).
+It will return the value in the correct type (e.g. integers will return as int) and it will not produce
+exceptions if there is something wrong with the GeometryParameter value.</p>
+<p>In order, it provides:
+- the calculated value if such exists
+- the normalised value if the parameter has been normalised
+- the original value in the correct type (if it can cast it, e.g. “17” can be easily casted to float)
+- the original value as a string if all above fails</p>
+<p>You should check other functions if you require one of these values in particular instead.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">[int|float|str] value</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="datavalidation.normalisation.html" class="btn btn-neutral float-right" title="normalisation package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="datavalidation.html" class="btn btn-neutral float-left" title="datavalidation package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Javier Chiyah Garcia
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
