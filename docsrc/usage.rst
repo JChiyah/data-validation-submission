@@ -63,7 +63,7 @@ An example valid request would look like this::
                     },
                     {
                         "p": "top_tube",
-                        "v": "21.02 / 534",
+                        "v": "534",
                         "id": "**any-value**"
                     },
                     {
@@ -301,7 +301,7 @@ An example response of validated bike geometries would look like this::
                         "p": "top_tube",
                         "id": "**any-value**",
                         "v": "534",
-                        "original_v": "21.02 / 534",
+                        "original_v": "534",
                         "calculated_v": "534",
                         "confidence": 1.0,
                         "invalid": False
