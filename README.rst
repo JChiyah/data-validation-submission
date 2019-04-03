@@ -11,7 +11,7 @@ A micro-service to perform data validation on bike geometries.
 
 
 * Free software: GNU Affero General Public License v3
-* Documentation: https://jchiyah.github.io/data-validation
+* Documentation: https://jchiyah.github.io/data-validation-submission
 
 
 Features
